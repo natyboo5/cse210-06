@@ -7,7 +7,7 @@ from game.casting.brick import Brick
 from game.casting.image import Image
 from game.casting.label import Label
 from game.casting.point import Point
-from game.casting.racket import Racket
+from game.casting.dog import Dog
 from game.casting.owner import Owner ###
 from game.casting.stats import Stats
 from game.casting.text import Text 
@@ -15,19 +15,19 @@ from game.scripting.change_scene_action import ChangeSceneAction
 from game.scripting.check_over_action import CheckOverAction
 from game.scripting.collide_borders_action import CollideBordersAction
 from game.scripting.collide_brick_action import CollideBrickAction
-from game.scripting.collide_racket_action import CollideRacketAction
-from game.scripting.control_racket_action import ControlRacketAction
+from game.scripting.collide_dog_action import CollideDogAction
+from game.scripting.control_dog_action import ControlDogAction
 from game.scripting.draw_ball_action import DrawBallAction
 from game.scripting.draw_bricks_action import DrawBricksAction
 from game.scripting.draw_dialog_action import DrawDialogAction
 from game.scripting.draw_hud_action import DrawHudAction
-from game.scripting.draw_racket_action import DrawRacketAction
+from game.scripting.draw_dog_action import DrawDogAction
 from game.scripting.draw_owner_action import DrawOwnerAction ####
 from game.scripting.end_drawing_action import EndDrawingAction
 from game.scripting.initialize_devices_action import InitializeDevicesAction
 from game.scripting.load_assets_action import LoadAssetsAction
 from game.scripting.move_ball_action import MoveBallAction
-from game.scripting.move_racket_action import MoveRacketAction
+from game.scripting.move_dog_action import MoveDogAction
 from game.scripting.play_sound_action import PlaySoundAction
 from game.scripting.release_devices_action import ReleaseDevicesAction
 from game.scripting.start_drawing_action import StartDrawingAction
@@ -50,19 +50,19 @@ class SceneManager:
     CHECK_OVER_ACTION = CheckOverAction()
     COLLIDE_BORDERS_ACTION = CollideBordersAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_BRICKS_ACTION = CollideBrickAction(PHYSICS_SERVICE, AUDIO_SERVICE)
-    COLLIDE_RACKET_ACTION = CollideRacketAction(PHYSICS_SERVICE, AUDIO_SERVICE)
-    CONTROL_RACKET_ACTION = ControlRacketAction(KEYBOARD_SERVICE)
+    COLLIDE_DOG_ACTION = CollideDogAction(PHYSICS_SERVICE, AUDIO_SERVICE)
+    CONTROL_DOG_ACTION = ControlDogAction(KEYBOARD_SERVICE)
     DRAW_BALL_ACTION = DrawBallAction(VIDEO_SERVICE)
     DRAW_BRICKS_ACTION = DrawBricksAction(VIDEO_SERVICE)
     DRAW_DIALOG_ACTION = DrawDialogAction(VIDEO_SERVICE)
     DRAW_HUD_ACTION = DrawHudAction(VIDEO_SERVICE)
-    DRAW_RACKET_ACTION= DrawRacketAction(VIDEO_SERVICE)
+    DRAW_DOG_ACTION= DrawDogAction(VIDEO_SERVICE)
     DRAW_OWNER_ACTION= DrawOwnerAction(VIDEO_SERVICE) ###
     END_DRAWING_ACTION = EndDrawingAction(VIDEO_SERVICE)
     INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
     LOAD_ASSETS_ACTION = LoadAssetsAction(AUDIO_SERVICE, VIDEO_SERVICE)
     MOVE_BALL_ACTION = MoveBallAction()
-    MOVE_RACKET_ACTION = MoveRacketAction()
+    MOVE_DOG_ACTION = MoveDogAction()
     RELEASE_DEVICES_ACTION = ReleaseDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
     START_DRAWING_ACTION = StartDrawingAction(VIDEO_SERVICE)
     UNLOAD_ASSETS_ACTION = UnloadAssetsAction(AUDIO_SERVICE, VIDEO_SERVICE)
@@ -93,7 +93,7 @@ class SceneManager:
         self._add_score(cast)
         self._add_ball(cast)
         self._add_bricks(cast)
-        self._add_racket(cast)
+        self._add_dog(cast)
         self._add_owner(cast)
         self._add_dialog(cast, ENTER_TO_START)
 
@@ -108,7 +108,7 @@ class SceneManager:
     def _prepare_next_level(self, cast, script):
         self._add_ball(cast)
         self._add_bricks(cast)
-        self._add_racket(cast)
+        self._add_dog(cast)
         self._add_owner(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
 
@@ -119,7 +119,7 @@ class SceneManager:
         
     def _prepare_try_again(self, cast, script):
         self._add_ball(cast)
-        self._add_racket(cast)
+        self._add_dog(cast)
         self._add_owner(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
 
@@ -133,13 +133,13 @@ class SceneManager:
         cast.clear_actors(DIALOG_GROUP)
 
         script.clear_actions(INPUT)
-        script.add_action(INPUT, self.CONTROL_RACKET_ACTION)
+        script.add_action(INPUT, self.CONTROL_DOG_ACTION)
         self._add_update_script(script)
         self._add_output_script(script)
 
     def _prepare_game_over(self, cast, script):
         self._add_ball(cast)
-        self._add_racket(cast)
+        self._add_dog(cast)
         self._add_owner(cast)
         self._add_dialog(cast, WAS_GOOD_GAME)
 
@@ -159,7 +159,7 @@ class SceneManager:
     def _add_ball(self, cast):
         cast.clear_actors(BALL_GROUP)
         x = CENTER_X - BALL_WIDTH / 2
-        y = SCREEN_HEIGHT - RACKET_HEIGHT - BALL_HEIGHT  
+        y = SCREEN_HEIGHT - DOG_HEIGHT - BALL_HEIGHT  
         position = Point(x, y)
         size = Point(BALL_WIDTH, BALL_HEIGHT)
         velocity = Point(0, 0)
@@ -234,17 +234,17 @@ class SceneManager:
         stats = Stats()
         cast.add_actor(STATS_GROUP, stats)
 
-    def _add_racket(self, cast):
-        cast.clear_actors(RACKET_GROUP)
-        x = SCREEN_WIDTH - RACKET_WIDTH
-        y = SCREEN_HEIGHT - RACKET_HEIGHT
+    def _add_dog(self, cast):
+        cast.clear_actors(DOG_GROUP)
+        x = SCREEN_WIDTH - DOG_WIDTH
+        y = SCREEN_HEIGHT - DOG_HEIGHT
         position = Point(x, y)
-        size = Point(RACKET_WIDTH, RACKET_HEIGHT)
+        size = Point(DOG_WIDTH, DOG_HEIGHT)
         velocity = Point(0, 0)
         body = Body(position, size, velocity)
-        animation = Animation(RACKET_IMAGES, RACKET_RATE)
-        racket = Racket(body, animation)
-        cast.add_actor(RACKET_GROUP, racket)
+        animation = Animation(DOG_IMAGES, DOG_RATE)
+        dog = Dog(body, animation)
+        cast.add_actor(DOG_GROUP, dog)
 
     def _add_owner(self, cast):
         cast.clear_actors(OWNER_GROUP)
@@ -275,7 +275,7 @@ class SceneManager:
         script.add_action(OUTPUT, self.DRAW_HUD_ACTION)
         script.add_action(OUTPUT, self.DRAW_BALL_ACTION)
         script.add_action(OUTPUT, self.DRAW_BRICKS_ACTION)
-        script.add_action(OUTPUT, self.DRAW_RACKET_ACTION)
+        script.add_action(OUTPUT, self.DRAW_DOG_ACTION)
         script.add_action(OUTPUT, self.DRAW_OWNER_ACTION)
         script.add_action(OUTPUT, self.DRAW_DIALOG_ACTION)
         script.add_action(OUTPUT, self.END_DRAWING_ACTION)
@@ -291,9 +291,9 @@ class SceneManager:
     def _add_update_script(self, script):
         script.clear_actions(UPDATE)
         script.add_action(UPDATE, self.MOVE_BALL_ACTION)
-        script.add_action(UPDATE, self.MOVE_RACKET_ACTION)
+        script.add_action(UPDATE, self.MOVE_DOG_ACTION)
         script.add_action(UPDATE, self.COLLIDE_BORDERS_ACTION)
         script.add_action(UPDATE, self.COLLIDE_BRICKS_ACTION)
-        script.add_action(UPDATE, self.COLLIDE_RACKET_ACTION)
-        script.add_action(UPDATE, self.MOVE_RACKET_ACTION)
+        script.add_action(UPDATE, self.COLLIDE_DOG_ACTION)
+        script.add_action(UPDATE, self.MOVE_DOG_ACTION)
         script.add_action(UPDATE, self.CHECK_OVER_ACTION)
