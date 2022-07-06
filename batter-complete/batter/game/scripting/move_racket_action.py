@@ -24,8 +24,8 @@ class MoveRacketAction(Action):
             
         if y < 0:
             position = Point(x, 0)
-        elif y > (SCREEN_WIDTH - RACKET_WIDTH):
-            position = Point(x, SCREEN_WIDTH - RACKET_WIDTH)
-            
+        elif y > (SCREEN_HEIGHT - RACKET_HEIGHT):
+            position = Point(x, SCREEN_HEIGHT - RACKET_HEIGHT)
+
         body.set_position(position)
         

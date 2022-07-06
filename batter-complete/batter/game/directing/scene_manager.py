@@ -8,6 +8,7 @@ from game.casting.image import Image
 from game.casting.label import Label
 from game.casting.point import Point
 from game.casting.racket import Racket
+from game.casting.owner import Owner ###
 from game.casting.stats import Stats
 from game.casting.text import Text 
 from game.scripting.change_scene_action import ChangeSceneAction
@@ -21,6 +22,7 @@ from game.scripting.draw_bricks_action import DrawBricksAction
 from game.scripting.draw_dialog_action import DrawDialogAction
 from game.scripting.draw_hud_action import DrawHudAction
 from game.scripting.draw_racket_action import DrawRacketAction
+from game.scripting.draw_owner_action import DrawOwnerAction ####
 from game.scripting.end_drawing_action import EndDrawingAction
 from game.scripting.initialize_devices_action import InitializeDevicesAction
 from game.scripting.load_assets_action import LoadAssetsAction
@@ -55,6 +57,7 @@ class SceneManager:
     DRAW_DIALOG_ACTION = DrawDialogAction(VIDEO_SERVICE)
     DRAW_HUD_ACTION = DrawHudAction(VIDEO_SERVICE)
     DRAW_RACKET_ACTION= DrawRacketAction(VIDEO_SERVICE)
+    DRAW_OWNER_ACTION= DrawOwnerAction(VIDEO_SERVICE) ###
     END_DRAWING_ACTION = EndDrawingAction(VIDEO_SERVICE)
     INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
     LOAD_ASSETS_ACTION = LoadAssetsAction(AUDIO_SERVICE, VIDEO_SERVICE)
@@ -91,6 +94,7 @@ class SceneManager:
         self._add_ball(cast)
         self._add_bricks(cast)
         self._add_racket(cast)
+        self._add_owner(cast)
         self._add_dialog(cast, ENTER_TO_START)
 
         self._add_initialize_script(script)
@@ -105,6 +109,7 @@ class SceneManager:
         self._add_ball(cast)
         self._add_bricks(cast)
         self._add_racket(cast)
+        self._add_owner(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
 
         script.clear_actions(INPUT)
@@ -115,6 +120,7 @@ class SceneManager:
     def _prepare_try_again(self, cast, script):
         self._add_ball(cast)
         self._add_racket(cast)
+        self._add_owner(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
 
         script.clear_actions(INPUT)
@@ -134,6 +140,7 @@ class SceneManager:
     def _prepare_game_over(self, cast, script):
         self._add_ball(cast)
         self._add_racket(cast)
+        self._add_owner(cast)
         self._add_dialog(cast, WAS_GOOD_GAME)
 
         script.clear_actions(INPUT)
@@ -239,6 +246,18 @@ class SceneManager:
         racket = Racket(body, animation)
         cast.add_actor(RACKET_GROUP, racket)
 
+    def _add_owner(self, cast):
+        cast.clear_actors(OWNER_GROUP)
+        x = 0
+        y = (SCREEN_HEIGHT / 2)
+        position = Point(x, y)
+        size = Point(OWNER_WIDTH, OWNER_HEIGHT)
+        velocity = Point(0, 3)
+        body = Body(position, size, velocity)
+        animation = Animation(OWNER_IMAGES, OWNER_RATE)
+        owner = Owner(body, animation)
+        cast.add_actor(OWNER_GROUP, owner)
+
     # ----------------------------------------------------------------------------------------------
     # scripting methods
     # ----------------------------------------------------------------------------------------------
@@ -257,6 +276,7 @@ class SceneManager:
         script.add_action(OUTPUT, self.DRAW_BALL_ACTION)
         script.add_action(OUTPUT, self.DRAW_BRICKS_ACTION)
         script.add_action(OUTPUT, self.DRAW_RACKET_ACTION)
+        script.add_action(OUTPUT, self.DRAW_OWNER_ACTION)
         script.add_action(OUTPUT, self.DRAW_DIALOG_ACTION)
         script.add_action(OUTPUT, self.END_DRAWING_ACTION)
 

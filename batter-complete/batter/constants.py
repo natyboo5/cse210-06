@@ -107,6 +107,14 @@ RACKET_HEIGHT = 200
 RACKET_RATE = 6
 RACKET_VELOCITY = 7
 
+# OWNER
+OWNER_GROUP = "owner"
+OWNER_IMAGES = [f"batter/assets/images/{n:03}.png" for n in range(105, 113)]
+OWNER_WIDTH = 20
+OWNER_HEIGHT = 20
+OWNER_RATE = 6
+# OWNER_VELOCITY = 7
+
 # BRICK
 BRICK_GROUP = "bricks"
 BRICK_IMAGES = {
