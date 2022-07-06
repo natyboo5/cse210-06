@@ -42,6 +42,8 @@ WHITE = Color(255, 255, 255)
 PURPLE = Color(255, 0, 255)
 
 # KEYS
+UP = "up"
+DOWN = "down"
 LEFT = "left"
 RIGHT = "right"
 SPACE = "space"
@@ -97,11 +99,11 @@ BALL_WIDTH = 28
 BALL_HEIGHT = 28
 BALL_VELOCITY = 6
 
-# RACKET
+# RACKET (DOG)
 RACKET_GROUP = "rackets"
-RACKET_IMAGES = [f"batter/assets/images/{n:03}.png" for n in range(100, 103)]
-RACKET_WIDTH = 106
-RACKET_HEIGHT = 28
+RACKET_IMAGES = [f"batter/assets/images/{n:03}.png" for n in range(100, 104)]
+RACKET_WIDTH = 200
+RACKET_HEIGHT = 200
 RACKET_RATE = 6
 RACKET_VELOCITY = 7
 

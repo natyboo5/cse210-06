@@ -229,7 +229,7 @@ class SceneManager:
 
     def _add_racket(self, cast):
         cast.clear_actors(RACKET_GROUP)
-        x = CENTER_X - RACKET_WIDTH / 2
+        x = SCREEN_WIDTH - RACKET_WIDTH
         y = SCREEN_HEIGHT - RACKET_HEIGHT
         position = Point(x, y)
         size = Point(RACKET_WIDTH, RACKET_HEIGHT)
