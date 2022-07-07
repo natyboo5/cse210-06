@@ -1,5 +1,5 @@
-# Batter
-Batter is a clone of the classic breakout game.
+# Fetch
+Fetch is a clone of the classic breakout game.
 
 ## Getting Started
 ---
@@ -9,7 +9,7 @@ python3 -m pip install raylib
 ```
 After you've installed the required libraries, open a terminal and browse to the project's root folder. Start the program by running the following command.```
 
-python3 batter 
+python3 fetch 
 ```
 You can also run the program from an IDE like Visual Studio Code. Start your IDE and open the 
 project folder. Select the main module inside the hunter folder and click the "run" icon.
@@ -19,7 +19,7 @@ project folder. Select the main module inside the hunter folder and click the "r
 The project files and folders are organized as follows:
 ```
 root                    (project root folder)
-+-- batter              (source code for game)
++-- fetch              (source code for game)
   +-- game              (specific game classes)
     +-- casting         (various actor classes)
     +-- directing       (director and scene manager classes)
