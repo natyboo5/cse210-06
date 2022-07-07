@@ -113,21 +113,7 @@ OWNER_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(105, 113)]
 OWNER_WIDTH = 20
 OWNER_HEIGHT = 20
 OWNER_RATE = 6
-# OWNER_VELOCITY = 7
 
-# BRICK
-BRICK_GROUP = "bricks"
-BRICK_IMAGES = {
-    "b": [f"fetch/assets/images/{i:03}.png" for i in range(10,19)],
-    "g": [f"fetch/assets/images/{i:03}.png" for i in range(20,29)],
-    "p": [f"fetch/assets/images/{i:03}.png" for i in range(30,39)],
-    "y": [f"fetch/assets/images/{i:03}.png" for i in range(40,49)]
-}
-BRICK_WIDTH = 80
-BRICK_HEIGHT = 28
-BRICK_DELAY = 0.5
-BRICK_RATE = 4
-BRICK_POINTS = 50
 
 # DIALOG
 DIALOG_GROUP = "dialogs"
