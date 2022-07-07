@@ -109,10 +109,10 @@ DOG_VELOCITY = 7
 
 # OWNER
 OWNER_GROUP = "owner"
-OWNER_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(105, 113)]
+OWNER_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(108, 111)]
 OWNER_WIDTH = 20
 OWNER_HEIGHT = 20
-OWNER_RATE = 6
+OWNER_RATE = 25
 
 
 # DIALOG
