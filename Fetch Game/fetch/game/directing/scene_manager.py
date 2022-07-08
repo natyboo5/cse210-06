@@ -1,7 +1,8 @@
 import csv
+import random
 from constants import *
 from game.casting.animation import Animation
-from game.casting.ball import Ball
+from game.casting.bone import Bone
 from game.casting.body import Body
 from game.casting.image import Image
 from game.casting.label import Label
@@ -14,8 +15,9 @@ from game.scripting.change_scene_action import ChangeSceneAction
 from game.scripting.check_over_action import CheckOverAction
 from game.scripting.collide_borders_action import CollideBordersAction
 from game.scripting.collide_dog_action import CollideDogAction
+from game.scripting.collide_bone_action import CollideBoneAction
 from game.scripting.control_dog_action import ControlDogAction
-from game.scripting.draw_ball_action import DrawBallAction
+from game.scripting.draw_bones_action import DrawBonesAction
 from game.scripting.draw_dialog_action import DrawDialogAction
 from game.scripting.draw_hud_action import DrawHudAction
 from game.scripting.draw_dog_action import DrawDogAction
@@ -23,7 +25,7 @@ from game.scripting.draw_owner_action import DrawOwnerAction ####
 from game.scripting.end_drawing_action import EndDrawingAction
 from game.scripting.initialize_devices_action import InitializeDevicesAction
 from game.scripting.load_assets_action import LoadAssetsAction
-from game.scripting.move_ball_action import MoveBallAction
+from game.scripting.move_bones_action import MoveBonesAction
 from game.scripting.move_dog_action import MoveDogAction
 from game.scripting.play_sound_action import PlaySoundAction
 from game.scripting.release_devices_action import ReleaseDevicesAction
@@ -47,8 +49,10 @@ class SceneManager:
     CHECK_OVER_ACTION = CheckOverAction()
     COLLIDE_BORDERS_ACTION = CollideBordersAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_DOG_ACTION = CollideDogAction(PHYSICS_SERVICE, AUDIO_SERVICE)
+    COLLIDE_DOG_ACTION = CollideBoneAction(PHYSICS_SERVICE, AUDIO_SERVICE)
+    COLLIDE_BONES_ACTION = CollideBoneAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     CONTROL_DOG_ACTION = ControlDogAction(KEYBOARD_SERVICE)
-    DRAW_BALL_ACTION = DrawBallAction(VIDEO_SERVICE)
+    DRAW_BONES_ACTION = DrawBonesAction(VIDEO_SERVICE)
     DRAW_DIALOG_ACTION = DrawDialogAction(VIDEO_SERVICE)
     DRAW_HUD_ACTION = DrawHudAction(VIDEO_SERVICE)
     DRAW_DOG_ACTION= DrawDogAction(VIDEO_SERVICE)
@@ -56,7 +60,7 @@ class SceneManager:
     END_DRAWING_ACTION = EndDrawingAction(VIDEO_SERVICE)
     INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
     LOAD_ASSETS_ACTION = LoadAssetsAction(AUDIO_SERVICE, VIDEO_SERVICE)
-    MOVE_BALL_ACTION = MoveBallAction()
+    MOVE_BONES_ACTION = MoveBonesAction()
     MOVE_DOG_ACTION = MoveDogAction()
     RELEASE_DEVICES_ACTION = ReleaseDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
     START_DRAWING_ACTION = StartDrawingAction(VIDEO_SERVICE)
@@ -82,11 +86,12 @@ class SceneManager:
     # ----------------------------------------------------------------------------------------------
     
     def _prepare_new_game(self, cast, script):
+        cast.clear_actors(DIALOG_GROUP)
         self._add_stats(cast)
         self._add_level(cast)
         self._add_lives(cast)
         self._add_score(cast)
-        self._add_ball(cast)
+        self._add_bones(cast)
         self._add_dog(cast)
         self._add_owner(cast)
         self._add_dialog(cast, ENTER_TO_START)
@@ -100,7 +105,7 @@ class SceneManager:
         self._add_release_script(script)
         
     def _prepare_next_level(self, cast, script):
-        self._add_ball(cast)
+        self._add_bones(cast)
         self._add_dog(cast)
         self._add_owner(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
@@ -111,7 +116,7 @@ class SceneManager:
         script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND))
         
     def _prepare_try_again(self, cast, script):
-        self._add_ball(cast)
+        self._add_bones(cast)
         self._add_dog(cast)
         self._add_owner(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
@@ -122,7 +127,6 @@ class SceneManager:
         self._add_output_script(script)
 
     def _prepare_in_play(self, cast, script):
-        self._activate_ball(cast)
         cast.clear_actors(DIALOG_GROUP)
 
         script.clear_actions(INPUT)
@@ -131,7 +135,7 @@ class SceneManager:
         self._add_output_script(script)
 
     def _prepare_game_over(self, cast, script):
-        self._add_ball(cast)
+        self._add_bones(cast)
         self._add_dog(cast)
         self._add_owner(cast)
         self._add_dialog(cast, WAS_GOOD_GAME)
@@ -145,23 +149,25 @@ class SceneManager:
     # casting methods
     # ----------------------------------------------------------------------------------------------
     
-    def _activate_ball(self, cast):
-        ball = cast.get_first_actor(BALL_GROUP)
-        ball.release()
+    def _add_bones(self, cast):
+        cast.clear_actors(BONE_GROUP)
 
-    def _add_ball(self, cast):
-        cast.clear_actors(BALL_GROUP)
-        x = CENTER_X - BALL_WIDTH / 2
-        y = SCREEN_HEIGHT - DOG_HEIGHT - BALL_HEIGHT  
-        position = Point(x, y)
-        size = Point(BALL_WIDTH, BALL_HEIGHT)
-        velocity = Point(0, 0)
-        body = Body(position, size, velocity)
-        image = Image(BALL_IMAGE)
-        ball = Ball(body, image, True)
-        cast.add_actor(BALL_GROUP, ball)
+        for i in range(BONE_QUANTITY):
+            x = random.randrange(FIELD_LEFT, FIELD_RIGHT - BONE_WIDTH)
+            y = Y_DISTANCE * (i+1)
+            position = Point(y, x)
 
-    
+            size = Point(BONE_WIDTH, BONE_HEIGHT)
+
+            vel_x = random.randrange(-2, 2)
+            vel_y = 3
+            velocity = Point(vel_y, vel_x)
+            type_of_bone = random.randrange(0, 3)
+            body = Body(position, size, velocity)
+            bone = Bone(body, type_of_bone, True)
+
+            cast.add_actor(BONE_GROUP, bone)
+
     def _add_dialog(self, cast, message):
         cast.clear_actors(DIALOG_GROUP)
         text = Text(message, FONT_FILE, FONT_SMALL, ALIGN_CENTER)
@@ -234,7 +240,7 @@ class SceneManager:
         script.clear_actions(OUTPUT)
         script.add_action(OUTPUT, self.START_DRAWING_ACTION)
         script.add_action(OUTPUT, self.DRAW_HUD_ACTION)
-        script.add_action(OUTPUT, self.DRAW_BALL_ACTION)
+        script.add_action(OUTPUT, self.DRAW_BONES_ACTION)
         script.add_action(OUTPUT, self.DRAW_DOG_ACTION)
         script.add_action(OUTPUT, self.DRAW_OWNER_ACTION)
         script.add_action(OUTPUT, self.DRAW_DIALOG_ACTION)
@@ -250,9 +256,10 @@ class SceneManager:
         
     def _add_update_script(self, script):
         script.clear_actions(UPDATE)
-        script.add_action(UPDATE, self.MOVE_BALL_ACTION)
+        script.add_action(UPDATE, self.MOVE_BONES_ACTION)
         script.add_action(UPDATE, self.MOVE_DOG_ACTION)
         script.add_action(UPDATE, self.COLLIDE_BORDERS_ACTION)
         script.add_action(UPDATE, self.COLLIDE_DOG_ACTION)
+        script.add_action(UPDATE, self.COLLIDE_BONES_ACTION)
         script.add_action(UPDATE, self.MOVE_DOG_ACTION)
         script.add_action(UPDATE, self.CHECK_OVER_ACTION)

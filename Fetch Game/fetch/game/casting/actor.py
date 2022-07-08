@@ -12,6 +12,7 @@ class Actor:
             id: A number that uniquely identifies the actor within the group.
         """
         self._debug = debug
+        self._points = 0 
         
     def is_debug(self):
         """Whether or not the actor is being debugged.
@@ -20,3 +21,19 @@ class Actor:
             True if the actor is being debugged; False if otherwise.
         """
         return self._debug
+    
+    def get_points(self):
+        """ Get points.
+        
+        Returns:
+            points.
+        """
+        return self._points
+        
+    def set_points(self, points):
+        """ Set points.
+        
+        Args:
+            points
+        """
+        self._points = points

@@ -25,6 +25,9 @@ class Stats(Actor):
         """
         self._score += points
 
+    def rest_points(self, points):
+        self._score -= points
+        
     def get_level(self):
         """Gets the level.
 

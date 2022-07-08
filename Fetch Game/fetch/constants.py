@@ -80,7 +80,7 @@ RELEASE = 6
 
 # STATS
 STATS_GROUP = "stats"
-DEFAULT_LIVES = 1000
+DEFAULT_LIVES = 3
 MAXIMUM_LIVES = 5
 
 # HUD
@@ -92,14 +92,8 @@ LEVEL_FORMAT = "LEVEL: {}"
 LIVES_FORMAT = "LIVES: {}"
 SCORE_FORMAT = "SCORE: {}"
 
-# BALL
-BALL_GROUP = "balls"
-BALL_IMAGE = "fetch/assets/images/000.png"
-BALL_WIDTH = 28
-BALL_HEIGHT = 28
-BALL_VELOCITY = 6
 
-# DOGDOG
+# DOG
 DOG_GROUP = "dogs"
 DOG_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(100, 104)]
 DOG_WIDTH = 200
@@ -108,12 +102,26 @@ DOG_RATE = 6
 DOG_VELOCITY = 7
 
 # OWNER
-OWNER_GROUP = "owner"
+OWNER_GROUP = "owners"
 OWNER_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(108, 111)]
 OWNER_WIDTH = 20
 OWNER_HEIGHT = 20
 OWNER_RATE = 25
 
+# BONE
+BONE_GROUP = "bones"
+BONE_QUANTITY = 1000
+Y_DISTANCE = -200
+BONE_IMAGES = "fetch/assets/images/010.png"
+BONE_MEAT_IMAGES = "fetch/assets/images/020.png"
+BONE_WIDTH = 50
+BONE_HEIGHT = 51
+BONE_POINTS = 50
+BONE_MEAT_POINTS = 200
+
+# DYNAMITE
+DYNAMITE_IMAGE = "fetch/assets/images/104.png"
+DYNAMITE_POINTS = -50
 
 # DIALOG
 DIALOG_GROUP = "dialogs"
