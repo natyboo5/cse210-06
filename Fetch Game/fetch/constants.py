@@ -22,9 +22,10 @@ FIELD_LEFT = 0
 FIELD_RIGHT = SCREEN_WIDTH
 
 # FONT
-FONT_FILE = "fetch/assets/fonts/zorque.otf"
+FONT = "fetch/assets/fonts/zorque.otf"
 FONT_SMALL = 32
 FONT_LARGE = 48
+FONT_SIZE_TITLE = 60
 
 # SOUND
 BOUNCE_SOUND = "fetch/assets/sounds/boing.wav"
@@ -49,6 +50,9 @@ RIGHT = "right"
 SPACE = "space"
 ENTER = "enter"
 PAUSE = "p"
+MENU = "m"
+HELP = "h"
+RESTART = "r"
 
 # SCENES
 NEW_GAME = 0
@@ -56,6 +60,7 @@ TRY_AGAIN = 1
 NEXT_LEVEL = 2
 IN_PLAY = 3
 GAME_OVER = 4
+FIRST_MENU = 5
 
 # LEVELS
 LEVEL_FILE = "fetch/assets/data/level-{:03}.txt"
@@ -77,6 +82,14 @@ RELEASE = 6
 # -------------------------------------------------------------------------------------------------- 
 # CASTING CONSTANTS
 # -------------------------------------------------------------------------------------------------- 
+
+# BACKGROUND
+BACKGROUND_GROUP = "background"
+BACKGROUND_LEVEL1 = "fetch/assets/images/level_1.png"
+BACKGROUND_LEVEL2 = "fetch/assets/images/level_2.png"
+BACKGROUND_LEVEL3 = "fetch/assets/images/level_3.png"
+BACKGROUND_FIRST = "fetch/assets/images/background.png"
+BACKGROUND_GAME_OVER = "fetch/assets/images/background_game_over.png"
 
 # STATS
 STATS_GROUP = "stats"
@@ -128,3 +141,11 @@ DIALOG_GROUP = "dialogs"
 ENTER_TO_START = "PRESS ENTER TO START"
 PREP_TO_LAUNCH = "PREPARING TO LAUNCH"
 WAS_GOOD_GAME = "GAME OVER"
+
+# INSTRUCTIONS
+BONE_INSTRUCTIONS = "BONE / 50 points"
+BONE_MEAT_INSTRUCTIONS = "BONE WITH MEAT / 200 points"
+DYNAMITE_INSTRUCTIONS = "DYNAMITE / -50 points"
+FIRST_MENU_INSTRUCTIONS = "m - for menu"
+RESTART_INSTRUCTIONS = "r - for restart"
+SHOW_INSTRUCTIONS = "h - for instructions"

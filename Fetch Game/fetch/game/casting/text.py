@@ -4,13 +4,22 @@ from constants import *
 class Text:
     """A text message."""
 
-    def __init__(self, value, fontfile = FONT_FILE, size = FONT_LARGE, alignment = ALIGN_LEFT):
+    def __init__(self, value, fontfile = FONT, size = FONT_LARGE, alignment = ALIGN_LEFT):
         """Constructs a new Text."""
         self._value = value
         self._fontfile = fontfile
         self._size = size
         self._alignment = alignment
+        self._color = BLACK
 
+    def get_color(self):
+        """Gets the color for the text.
+
+        Returns:
+            A RGB numbers representing a color.
+        """
+        return self._color
+        
     def get_alignment(self):
         """Gets the alignment for the text.
         
