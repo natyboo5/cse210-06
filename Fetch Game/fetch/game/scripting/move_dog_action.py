@@ -17,15 +17,14 @@ class MoveDogAction(Action):
         y = position.get_y()
         position = position.add(velocity)
 
-        if x < 0:
-            position = Point(0, y)
+        if x < SCREEN_WIDTH / 3:
+            position = Point(SCREEN_WIDTH / 3, y)
         elif x > (SCREEN_WIDTH - DOG_WIDTH):
             position = Point(SCREEN_WIDTH - DOG_WIDTH, y)
-            
+
         if y < 0:
             position = Point(x, 0)
         elif y > (SCREEN_HEIGHT - DOG_HEIGHT):
             position = Point(x, SCREEN_HEIGHT - DOG_HEIGHT)
 
         body.set_position(position)
-        

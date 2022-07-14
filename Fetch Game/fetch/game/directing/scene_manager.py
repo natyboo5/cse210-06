@@ -10,7 +10,7 @@ from game.casting.point import Point
 from game.casting.dog import Dog
 from game.casting.owner import Owner ###
 from game.casting.stats import Stats
-from game.casting.text import Text 
+from game.casting.text import Text
 from game.casting.background import Background
 from game.scripting.change_scene_action import ChangeSceneAction
 from game.scripting.check_over_action import CheckOverAction
@@ -42,7 +42,7 @@ from game.services.raylib.raylib_video_service import RaylibVideoService
 
 class SceneManager:
     """The person in charge of setting up the cast and script for each scene."""
-    
+
     AUDIO_SERVICE = RaylibAudioService()
     KEYBOARD_SERVICE = RaylibKeyboardService()
     PHYSICS_SERVICE = RaylibPhysicsService()
@@ -85,23 +85,23 @@ class SceneManager:
             self._prepare_in_play(cast, script)
         elif scene == GAME_OVER:
             self._prepare_game_over(cast, script)
-    
+
     # ----------------------------------------------------------------------------------------------
     # scene methods
     # ----------------------------------------------------------------------------------------------
-    
+
     def _prepare_new_game(self, cast, script):
-        
-        self._add_stats(cast)
-        self._add_level(cast)
-        self._add_lives(cast)
-        self._add_score(cast)
-        self._add_bones(cast)
-        self._add_dog(cast)
-        self._add_owner(cast)
-        
+
+        # self._add_stats(cast)
+        # self._add_level(cast)
+        # self._add_lives(cast)
+        # self._add_score(cast)
+        # self._add_bones(cast)
+        # self._add_dog(cast)
+        # self._add_owner(cast)
+
         cast.clear_actors(DIALOG_GROUP)
-        script.clear_actions(INPUT)
+        #script.clear_actions(INPUT)
 
         self._add_dialog(cast, GAME_NAME, FONT,
                          FONT_SIZE_TITLE, ALIGN_CENTER, Point(CENTER_X, 200))
@@ -117,10 +117,17 @@ class SceneManager:
         script.clear_actions(INPUT)
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEXT_LEVEL, ENTER))
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, FIRST_MENU, HELP))
-  
+
         self._add_initialize_script(script)
         self._add_load_script(script)
-        self._add_output_script(script)
+
+        draw = [
+                    self.DRAW_BACKGROUND_ACTION,
+                    self.DRAW_DIALOG_ACTION
+                ]
+
+        self._add_output_script(script, draw)
+
         self._add_unload_script(script)
         self._add_release_script(script)
 
@@ -145,10 +152,19 @@ class SceneManager:
         script.clear_actions(UPDATE)
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEW_GAME, MENU))
 
-        self._add_output_script(script)
+        draw = [
+                    self.DRAW_BACKGROUND_ACTION,
+                    self.DRAW_DIALOG_ACTION
+                ]
+
+        self._add_output_script(script, draw)
+
 
     def _prepare_next_level(self, cast, script):
         self._add_stats(cast)
+
+        self._add_level(cast)
+
         self._add_lives(cast)
         self._add_score(cast)
         self._add_bones(cast)
@@ -161,21 +177,38 @@ class SceneManager:
 
         script.clear_actions(INPUT)
         script.add_action(INPUT, TimedChangeSceneAction(IN_PLAY, 2))
-        self._add_output_script(script)
+
+        draw = [
+                    self.DRAW_BACKGROUND_ACTION,
+                    self.DRAW_HUD_ACTION,
+                    self.DRAW_BONES_ACTION,
+                    self.DRAW_OWNER_ACTION,
+                    self.DRAW_DOG_ACTION,
+                    self.DRAW_DIALOG_ACTION
+                ]
+
+        self._add_output_script(script, draw)
+
         script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND))
-        
+
     def _prepare_try_again(self, cast, script):
-        self._add_bones(cast)
-        self._add_dog(cast)
-        self._add_owner(cast)
+        # self._add_bones(cast)
+        # self._add_dog(cast)
+        # self._add_owner(cast)
 
         self._add_dialog(cast, WAS_GOOD_GAME, FONT,
                          FONT_SMALL, ALIGN_CENTER, Point(CENTER_X, CENTER_Y))
 
+        self._add_background(cast, BACKGROUND_LEVEL1)
+
         script.clear_actions(INPUT)
+        script.clear_actions(UPDATE)
+
         script.add_action(INPUT, TimedChangeSceneAction(IN_PLAY, 2))
-        self._add_update_script(script)
+
+        #self._add_update_script(script)
         self._add_output_script(script)
+
 
     def _prepare_in_play(self, cast, script):
         cast.clear_actors(DIALOG_GROUP)
@@ -185,13 +218,26 @@ class SceneManager:
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEXT_LEVEL, RESTART))
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEW_GAME, MENU))
         self._add_update_script(script)
-        self._add_output_script(script)
+        #self._add_output_script(script)
+
+        draw = [
+                    self.DRAW_BACKGROUND_ACTION,
+                    self.DRAW_HUD_ACTION,
+                    self.DRAW_BONES_ACTION,
+                    self.DRAW_OWNER_ACTION,
+                    self.DRAW_DOG_ACTION,
+                    self.DRAW_DIALOG_ACTION
+                ]
+
+
+        self._add_output_script(script, draw)
+
 
     def _prepare_game_over(self, cast, script):
         cast.clear_actors(DIALOG_GROUP)
 
-        self._add_bones(cast)
-        self._add_dog(cast)
+        # self._add_bones(cast)
+        # self._add_dog(cast)
         # self._add_owner(cast)
 
         stats = cast.get_first_actor(STATS_GROUP)
@@ -211,7 +257,13 @@ class SceneManager:
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEXT_LEVEL, RESTART))
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEW_GAME, MENU))
         script.clear_actions(UPDATE)
-        self._add_output_script(script)
+
+        draw = [
+            self.DRAW_BACKGROUND_ACTION,
+            self.DRAW_DIALOG_ACTION
+        ]
+
+        self._add_output_script(script, draw)
 
     # ----------------------------------------------------------------------------------------------
     # casting methods
@@ -232,14 +284,14 @@ class SceneManager:
         cast.clear_actors(BONE_GROUP)
 
         for i in range(BONE_QUANTITY):
-            x = random.randrange(FIELD_LEFT, FIELD_RIGHT - BONE_WIDTH)
+            x = 600
             y = Y_DISTANCE * (i+1)
             position = Point(y, x)
 
             size = Point(BONE_WIDTH, BONE_HEIGHT)
 
-            vel_x = random.randrange(-2, 2)
-            vel_y = 3
+            vel_x = random.randrange(-3, 3)
+            vel_y = 5
             velocity = Point(vel_y, vel_x)
             type_of_bone = random.randrange(0, 3)
             body = Body(position, size, velocity)
@@ -281,8 +333,8 @@ class SceneManager:
 
     def _add_dog(self, cast):
         cast.clear_actors(DOG_GROUP)
-        x = SCREEN_WIDTH - DOG_WIDTH
-        y = SCREEN_HEIGHT - DOG_HEIGHT
+        x = SCREEN_WIDTH - DOG_WIDTH * 1.5
+        y = SCREEN_HEIGHT - DOG_HEIGHT * 1.3
         position = Point(x, y)
         size = Point(DOG_WIDTH, DOG_HEIGHT)
         velocity = Point(0, 0)
@@ -313,26 +365,32 @@ class SceneManager:
     def _add_load_script(self, script):
         script.clear_actions(LOAD)
         script.add_action(LOAD, self.LOAD_ASSETS_ACTION)
-    
-    def _add_output_script(self, script):
+
+    def _add_output_script(self, script, draw):
         script.clear_actions(OUTPUT)
         script.add_action(OUTPUT, self.START_DRAWING_ACTION)
-        script.add_action(OUTPUT, self.DRAW_BACKGROUND_ACTION)
-        script.add_action(OUTPUT, self.DRAW_HUD_ACTION)
-        script.add_action(OUTPUT, self.DRAW_BONES_ACTION)
-        script.add_action(OUTPUT, self.DRAW_DOG_ACTION)
-        script.add_action(OUTPUT, self.DRAW_OWNER_ACTION)
-        script.add_action(OUTPUT, self.DRAW_DIALOG_ACTION)
+
+        for i in draw:
+            script.add_action(OUTPUT, i)
+
+
+        # script.add_action(OUTPUT, self.DRAW_BACKGROUND_ACTION)
+        # script.add_action(OUTPUT, self.DRAW_HUD_ACTION)
+        # script.add_action(OUTPUT, self.DRAW_BONES_ACTION)
+        # script.add_action(OUTPUT, self.DRAW_DOG_ACTION)
+        # script.add_action(OUTPUT, self.DRAW_OWNER_ACTION)
+        # script.add_action(OUTPUT, self.DRAW_DIALOG_ACTION)
+
         script.add_action(OUTPUT, self.END_DRAWING_ACTION)
 
     def _add_release_script(self, script):
         script.clear_actions(RELEASE)
         script.add_action(RELEASE, self.RELEASE_DEVICES_ACTION)
-    
+
     def _add_unload_script(self, script):
         script.clear_actions(UNLOAD)
         script.add_action(UNLOAD, self.UNLOAD_ASSETS_ACTION)
-        
+
     def _add_update_script(self, script):
         script.clear_actions(UPDATE)
         script.add_action(UPDATE, self.MOVE_BONES_ACTION)
