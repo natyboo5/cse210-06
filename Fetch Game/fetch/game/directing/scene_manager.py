@@ -8,7 +8,7 @@ from game.casting.image import Image
 from game.casting.label import Label
 from game.casting.point import Point
 from game.casting.dog import Dog
-from game.casting.owner import Owner ###
+from game.casting.owner import Owner 
 from game.casting.stats import Stats
 from game.casting.text import Text
 from game.casting.background import Background
@@ -22,7 +22,7 @@ from game.scripting.draw_bones_action import DrawBonesAction
 from game.scripting.draw_dialog_action import DrawDialogAction
 from game.scripting.draw_hud_action import DrawHudAction
 from game.scripting.draw_dog_action import DrawDogAction
-from game.scripting.draw_owner_action import DrawOwnerAction ####
+from game.scripting.draw_owner_action import DrawOwnerAction 
 from game.scripting.draw_background_action import DrawBackgroundAction
 from game.scripting.end_drawing_action import EndDrawingAction
 from game.scripting.initialize_devices_action import InitializeDevicesAction
@@ -58,7 +58,7 @@ class SceneManager:
     DRAW_DIALOG_ACTION = DrawDialogAction(VIDEO_SERVICE)
     DRAW_HUD_ACTION = DrawHudAction(VIDEO_SERVICE)
     DRAW_DOG_ACTION= DrawDogAction(VIDEO_SERVICE)
-    DRAW_OWNER_ACTION= DrawOwnerAction(VIDEO_SERVICE) ###
+    DRAW_OWNER_ACTION= DrawOwnerAction(VIDEO_SERVICE)
     DRAW_BACKGROUND_ACTION = DrawBackgroundAction(VIDEO_SERVICE)
     END_DRAWING_ACTION = EndDrawingAction(VIDEO_SERVICE)
     INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
@@ -92,16 +92,7 @@ class SceneManager:
 
     def _prepare_new_game(self, cast, script):
 
-        # self._add_stats(cast)
-        # self._add_level(cast)
-        # self._add_lives(cast)
-        # self._add_score(cast)
-        # self._add_bones(cast)
-        # self._add_dog(cast)
-        # self._add_owner(cast)
-
         cast.clear_actors(DIALOG_GROUP)
-        #script.clear_actions(INPUT)
 
         self._add_dialog(cast, GAME_NAME, FONT,
                          FONT_SIZE_TITLE, ALIGN_CENTER, Point(CENTER_X, 200))
@@ -125,11 +116,13 @@ class SceneManager:
                     self.DRAW_BACKGROUND_ACTION,
                     self.DRAW_DIALOG_ACTION
                 ]
-
+        
         self._add_output_script(script, draw)
 
         self._add_unload_script(script)
         self._add_release_script(script)
+
+        script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND))
 
     def _prepare_first_menu(self, cast, script):
         cast.clear_actors(DIALOG_GROUP)
@@ -141,13 +134,13 @@ class SceneManager:
         self._add_dialog(cast, DYNAMITE_INSTRUCTIONS, FONT,
                          FONT_SMALL, ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 200), True)
 
-        # how to go to menu
+        # MENU
         self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_LARGE,
                          ALIGN_CENTER, Point(CENTER_X, 200), True)
 
         self._add_background(cast, BACKGROUND_FIRST)
 
-        # actions to move to other scenes
+        # MOVE TO OTHERS SCENES
         script.clear_actions(INPUT)
         script.clear_actions(UPDATE)
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEW_GAME, MENU))
@@ -218,7 +211,6 @@ class SceneManager:
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEXT_LEVEL, RESTART))
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEW_GAME, MENU))
         self._add_update_script(script)
-        #self._add_output_script(script)
 
         draw = [
                     self.DRAW_BACKGROUND_ACTION,
@@ -235,11 +227,6 @@ class SceneManager:
 
     def _prepare_game_over(self, cast, script):
         cast.clear_actors(DIALOG_GROUP)
-
-        # self._add_bones(cast)
-        # self._add_dog(cast)
-        # self._add_owner(cast)
-
         stats = cast.get_first_actor(STATS_GROUP)
 
         self._add_dialog(cast, WAS_GOOD_GAME, FONT,

@@ -31,6 +31,7 @@ FONT_SIZE_TITLE = 60
 BOUNCE_SOUND = "fetch/assets/sounds/collision.wav"
 GAME_SOUND = "fetch/assets/sounds/game_sound.wav"
 OVER_SOUND = "fetch/assets/sounds/over.wav"
+WELCOME_SOUND = "fetch/assets/sounds/welcome_page.wav"
 
 
 # TEXT
@@ -145,7 +146,7 @@ HEART_POINTS = 100
 
 # DIALOG
 DIALOG_GROUP = "dialogs"
-ENTER_TO_START = "PRESS ENTER TO START"
+ENTER_TO_START = "ENTER TO START"
 PREP_TO_LAUNCH = "PREPARING TO LAUNCH"
 WAS_GOOD_GAME = "GAME OVER"
 
@@ -153,6 +154,6 @@ WAS_GOOD_GAME = "GAME OVER"
 BONE_INSTRUCTIONS = "BONE / 50 points"
 BONE_MEAT_INSTRUCTIONS = "BONE WITH MEAT / 200 points"
 DYNAMITE_INSTRUCTIONS = "DYNAMITE / -50 points"
-FIRST_MENU_INSTRUCTIONS = "m - for menu"
-RESTART_INSTRUCTIONS = "r - for restart"
-SHOW_INSTRUCTIONS = "h - for instructions"
+FIRST_MENU_INSTRUCTIONS = "M - Principal Menu"
+RESTART_INSTRUCTIONS = "R - Restart"
+SHOW_INSTRUCTIONS = "H - Instructions"
