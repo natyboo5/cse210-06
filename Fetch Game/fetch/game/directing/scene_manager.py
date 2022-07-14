@@ -189,7 +189,7 @@ class SceneManager:
 
         self._add_output_script(script, draw)
 
-        script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND))
+        script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, GAME_SOUND))
 
     def _prepare_try_again(self, cast, script):
         # self._add_bones(cast)

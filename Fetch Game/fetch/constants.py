@@ -28,9 +28,10 @@ FONT_LARGE = 48
 FONT_SIZE_TITLE = 60
 
 # SOUND
-BOUNCE_SOUND = "fetch/assets/sounds/boing.wav"
-WELCOME_SOUND = "fetch/assets/sounds/start.wav"
+BOUNCE_SOUND = "fetch/assets/sounds/collision.wav"
+GAME_SOUND = "fetch/assets/sounds/game_sound.wav"
 OVER_SOUND = "fetch/assets/sounds/over.wav"
+
 
 # TEXT
 ALIGN_CENTER = 0
