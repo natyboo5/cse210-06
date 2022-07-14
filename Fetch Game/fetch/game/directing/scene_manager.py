@@ -290,10 +290,11 @@ class SceneManager:
 
             size = Point(BONE_WIDTH, BONE_HEIGHT)
 
-            vel_x = random.randrange(-3, 3)
-            vel_y = 5
+            vel_x = random.randrange(-3, 9)
+            vel_y = int((i+1000)*0.01)
+
             velocity = Point(vel_y, vel_x)
-            type_of_bone = random.randrange(0, 3)
+            type_of_bone = random.randrange(0, 4)
             body = Body(position, size, velocity)
             bone = Bone(body, type_of_bone, True)
 
@@ -372,14 +373,6 @@ class SceneManager:
 
         for i in draw:
             script.add_action(OUTPUT, i)
-
-
-        # script.add_action(OUTPUT, self.DRAW_BACKGROUND_ACTION)
-        # script.add_action(OUTPUT, self.DRAW_HUD_ACTION)
-        # script.add_action(OUTPUT, self.DRAW_BONES_ACTION)
-        # script.add_action(OUTPUT, self.DRAW_DOG_ACTION)
-        # script.add_action(OUTPUT, self.DRAW_OWNER_ACTION)
-        # script.add_action(OUTPUT, self.DRAW_DIALOG_ACTION)
 
         script.add_action(OUTPUT, self.END_DRAWING_ACTION)
 
