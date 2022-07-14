@@ -28,4 +28,9 @@ class CollideBoneAction(Action):
                 # DYNAMITE
                 if bone.get_type() == 2:  
                     stats.lose_life()
+                
+                # HEART
+                if bone.get_type() == 3:  
+                    stats.add_life()
+
                 cast.remove_actor(BONE_GROUP, bone)

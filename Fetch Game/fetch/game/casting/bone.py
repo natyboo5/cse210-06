@@ -34,6 +34,15 @@ class Bone(Actor):
         elif type_of_bone == 2:
             self._image = Image(DYNAMITE_IMAGE)
             self.set_points(DYNAMITE_POINTS)
+        
+        # LIVES
+        elif type_of_bone == 3:
+            self._image = Image(HEART_IMAGE)
+            self.set_points(HEART_POINTS)
+            
+
+        
+        
 
 
     def get_type(self):

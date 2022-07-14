@@ -22,7 +22,7 @@ FIELD_LEFT = 0
 FIELD_RIGHT = SCREEN_WIDTH
 
 # FONT
-FONT = "fetch/assets/fonts/zorque.otf"
+FONT = "fetch/assets/fonts/BeatWordDemo-nRL20.ttf"
 FONT_SMALL = 32
 FONT_LARGE = 48
 FONT_SIZE_TITLE = 60
@@ -94,7 +94,7 @@ BACKGROUND_GAME_OVER = "fetch/assets/images/background_game_over.png"
 # STATS
 STATS_GROUP = "stats"
 DEFAULT_LIVES = 3
-MAXIMUM_LIVES = 5
+MAXIMUM_LIVES = 10
 
 # HUD
 HUD_MARGIN = 15
@@ -135,6 +135,12 @@ BONE_MEAT_POINTS = 200
 # DYNAMITE
 DYNAMITE_IMAGE = "fetch/assets/images/104.png"
 DYNAMITE_POINTS = -50
+
+# DYNAMITE
+HEART_IMAGE = "fetch/assets/images/040.png"
+HEART_POINTS = 100
+
+
 
 # DIALOG
 DIALOG_GROUP = "dialogs"
