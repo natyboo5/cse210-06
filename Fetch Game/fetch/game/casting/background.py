@@ -1,13 +1,12 @@
 
 from constants import *
 from game.casting.actor import Actor
-from game.casting.point import Point
 
 
 class Background(Actor):
     """Background."""
 
-    def __init__(self, body, image, debug=False):
+    def __init__(self, body, animation, debug=False):
         """Constructs a new Background.
 
         Args:
@@ -15,20 +14,20 @@ class Background(Actor):
             debug: If it is being debugged. 
         """
         super().__init__(debug)
-        self._image = image
+        self._animation = animation
         self._body = body
-        self._position = Point(0, 0)
+        
 
-    def get_image(self):
-        """Gets the owner's image.
+    def get_animation(self):
+        """Gets the background's animation.
 
         Returns:
-            An instance of Image.
+            An instance of animation.
         """
-        return self._image
+        return self._animation
 
     def get_body(self):
-        """Gets the owner's body.
+        """Gets the background's body.
 
         Returns:
             An instance of Body.

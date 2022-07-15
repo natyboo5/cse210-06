@@ -87,11 +87,14 @@ RELEASE = 6
 
 # BACKGROUND
 BACKGROUND_GROUP = "background"
-BACKGROUND_LEVEL1 = "fetch/assets/images/level_1.png"
-BACKGROUND_LEVEL2 = "fetch/assets/images/level_2.png"
-BACKGROUND_LEVEL3 = "fetch/assets/images/level_3.png"
-BACKGROUND_FIRST = "fetch/assets/images/background.png"
-BACKGROUND_GAME_OVER = "fetch/assets/images/background_game_over.png"
+BACKGROUND_LEVEL1 = [f"fetch/assets/images/{n:03}.png" for n in range(140, 144)]
+BACKGROUND_LEVEL2 = [f"fetch/assets/images/{n:03}.png" for n in range(150, 151)]
+BACKGROUND_LEVEL3 = [f"fetch/assets/images/{n:03}.png" for n in range(160, 161)]
+BACKGROUND_FIRST_MENU = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
+BACKGROUND_INSTRUCTIONS = [f"fetch/assets/images/{n:03}.png" for n in range(135, 137)]
+BACKGROUND_GAME_OVER = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
+BACKGROUND = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
+BG_RATE = 15
 
 # STATS
 STATS_GROUP = "stats"
