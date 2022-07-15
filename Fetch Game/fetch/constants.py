@@ -91,7 +91,7 @@ BACKGROUND_LEVEL1 = [f"fetch/assets/images/{n:03}.png" for n in range(140, 144)]
 BACKGROUND_LEVEL2 = [f"fetch/assets/images/{n:03}.png" for n in range(150, 151)]
 BACKGROUND_LEVEL3 = [f"fetch/assets/images/{n:03}.png" for n in range(160, 161)]
 BACKGROUND_FIRST_MENU = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
-BACKGROUND_INSTRUCTIONS = [f"fetch/assets/images/{n:03}.png" for n in range(135, 137)]
+BACKGROUND_INSTRUCTIONS = [f"fetch/assets/images/{n:03}.png" for n in range(135, 136)]
 BACKGROUND_GAME_OVER = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
 BACKGROUND = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
 BG_RATE = 15
@@ -117,7 +117,9 @@ DOG_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(100, 104)]
 DOG_WIDTH = 200
 DOG_HEIGHT = 200
 DOG_RATE = 6
-DOG_VELOCITY = 7
+DOG_VELOCITY = 10
+GAME_DOG_X = SCREEN_WIDTH - DOG_WIDTH * 1.5
+GAME_DOG_Y = SCREEN_HEIGHT - DOG_HEIGHT * 1.3
 
 DOG_SAD_GROUP = "dogs_sad"
 DOG_SAD_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(190, 193)]
@@ -149,7 +151,12 @@ DYNAMITE_POINTS = -50
 HEART_IMAGE = "fetch/assets/images/040.png"
 HEART_POINTS = 100
 
-
+# KEYBOARD
+KEYBOARD_GROUP = "keyboars"
+KEYBOARD_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(50, 54)]
+KEYBOARD_WIDTH = 200
+KEYBOARD_HEIGHT = 200
+KEYBOARD_RATE = 25
 
 # DIALOG
 DIALOG_GROUP = "dialogs"
@@ -158,9 +165,15 @@ PREP_TO_LAUNCH = "PREPARING TO LAUNCH"
 WAS_GOOD_GAME = "GAME OVER"
 
 # INSTRUCTIONS
-BONE_INSTRUCTIONS = "BONE / 50 points"
-BONE_MEAT_INSTRUCTIONS = "BONE WITH MEAT / 200 points"
-DYNAMITE_INSTRUCTIONS = "DYNAMITE / -50 points"
-FIRST_MENU_INSTRUCTIONS = "M - Principal Menu"
+HEART_INSTRUCTIONS = "1 life / 100 points / MAX 10"
+BONE_INSTRUCTIONS = "50 points"
+BONE_MEAT_INSTRUCTIONS = "200 points"
+DYNAMITE_INSTRUCTIONS = "-1 life / -50 points"
+FIRST_MENU_INSTRUCTIONS = "M - Menu"
 RESTART_INSTRUCTIONS = "R - Restart"
-SHOW_INSTRUCTIONS = "H - Instructions"
+SHOW_INSTRUCTIONS = "H - Help"
+WARNING_1 = "Every 100 objects"
+WARNING_2 = "SPEED will increase"
+MOVE_DOG_1 = "To move your DOG"
+WIN_DOG_1 = "To WIN"
+WIN_DOG_2 = "Eat 500 objects"
