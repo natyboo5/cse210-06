@@ -296,7 +296,7 @@ class SceneManager:
             velocity = Point(vel_y, vel_x)
             type_of_bone = random.randrange(0, 4)
             body = Body(position, size, velocity)
-            bone = Bone(body, type_of_bone, True)
+            bone = Bone(body, i + 1, type_of_bone, True)
 
             cast.add_actor(BONE_GROUP, bone)
 
