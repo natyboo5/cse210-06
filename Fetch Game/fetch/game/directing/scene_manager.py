@@ -107,14 +107,12 @@ class SceneManager:
 
         cast.clear_actors(DIALOG_GROUP)
 
-        self._add_dialog(cast, GAME_NAME, FONT,
-                         FONT_SIZE_TITLE, ALIGN_CENTER, Point(CENTER_X, 200))
         self._add_dialog(cast, ENTER_TO_START, FONT, FONT_LARGE,
                          ALIGN_CENTER, Point(CENTER_X, CENTER_Y), True)
         self._add_dialog(cast, SHOW_INSTRUCTIONS, FONT, FONT_LARGE,
-                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 100), True)
+                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 220), True)
         self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_LARGE,
-                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 200), True)
+                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 300), True)
 
         self._add_background(cast, BACKGROUND_FIRST_MENU)
 
@@ -154,8 +152,8 @@ class SceneManager:
                          FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 780), True)
 
         # MENU
-        self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_LARGE,
-                         ALIGN_CENTER, Point(CENTER_X, 200), True)
+        self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_SMALL,
+                         ALIGN_CENTER, Point(120, CENTER_Y + 50), True)
 
         # WARNING
         self._add_dialog(cast, WARNING_1, FONT, FONT_SMALL,
@@ -369,7 +367,7 @@ class SceneManager:
             size = Point(BONE_WIDTH, BONE_HEIGHT)
 
             vel_x = random.randrange(-3, 9)
-            vel_y = int((i+600)*0.01)
+            vel_y = int((i+700)*0.01)
 
             velocity = Point(vel_y, vel_x)
             type_of_bone = random.randrange(0, 4)

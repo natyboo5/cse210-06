@@ -3,6 +3,7 @@ from constants import *
 from game.casting.actor import Actor
 from game.casting.point import Point
 from game.casting.image import Image
+from game.casting.animation import Animation
 
 
 
@@ -19,31 +20,38 @@ class Bone(Actor):
         """
         super().__init__(debug)
         self._image = 0
+        self._animation = 0
         self._body = body
 
         self._type_of_bone = type_of_bone
         # BONE
         if type_of_bone == 0:
-            self._image = Image(BONE_IMAGES)
+            self._animation = Animation(BONE_IMAGES, RATE_ITEMS)
             self.set_points(BONE_POINTS)
         # BONE WITH MEAT
         elif type_of_bone == 1:
-            self._image = Image(BONE_MEAT_IMAGES)
+            self._animation = Animation(BONE_MEAT_IMAGES, RATE_ITEMS)
             self.set_points(BONE_MEAT_POINTS)
         # DYNAMITE
         elif type_of_bone == 2:
-            self._image = Image(DYNAMITE_IMAGE)
+            self._animation = Animation(DYNAMITE_IMAGE, RATE_ITEMS)
             self.set_points(DYNAMITE_POINTS)
         
         # LIVES
         elif type_of_bone == 3:
-            self._image = Image(HEART_IMAGE)
+            self._animation = Animation(HEART_IMAGES, RATE_ITEMS)
             self.set_points(HEART_POINTS)
             
 
         
         
-
+    def get_animation(self):
+        """Gets the items's animation.
+        
+        Returns:
+            An instance of Animation.
+        """
+        return self._animation
 
     def get_type(self):
         return self._type_of_bone
@@ -81,13 +89,3 @@ class Bone(Actor):
         vy = velocity.get_y() * -1 
         velocity = Point(vx, vy)
         self._body.set_velocity(velocity)
-
-
-
-    # def release(self):
-    #     """Release the bone in a random direction."""
-    #     rn = random.uniform(0.9, 1.1)
-    #     vx = random.choice([-BONE_VELOCITY * rn, BONE_VELOCITY * rn])
-    #     vy = -BONE_VELOCITY
-    #     velocity = Point(vx, vy)
-    #     self._body.set_velocity(velocity)

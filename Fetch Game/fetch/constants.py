@@ -91,7 +91,7 @@ BACKGROUND_GROUP = "background"
 BACKGROUND_LEVEL1 = [f"fetch/assets/images/{n:03}.png" for n in range(140, 144)]
 BACKGROUND_LEVEL2 = [f"fetch/assets/images/{n:03}.png" for n in range(150, 151)]
 BACKGROUND_LEVEL3 = [f"fetch/assets/images/{n:03}.png" for n in range(160, 161)]
-BACKGROUND_FIRST_MENU = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
+BACKGROUND_FIRST_MENU = [f"fetch/assets/images/{n:03}.png" for n in range(1, 2)]
 BACKGROUND_INSTRUCTIONS = [f"fetch/assets/images/{n:03}.png" for n in range(135, 136)]
 BACKGROUND_GAME_OVER = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
 BACKGROUND_GAME_OVER_WIN = [f"fetch/assets/images/{n:03}.png" for n in range(125, 126)]
@@ -138,19 +138,19 @@ OWNER_RATE = 25
 BONE_GROUP = "bones"
 BONE_QUANTITY = 2000
 Y_DISTANCE = -200
-BONE_IMAGES = "fetch/assets/images/010.png"
-BONE_MEAT_IMAGES = "fetch/assets/images/020.png"
+BONE_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(10, 12)]
+BONE_MEAT_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(20, 22)]
 BONE_WIDTH = 50
 BONE_HEIGHT = 51
 BONE_POINTS = 50
 BONE_MEAT_POINTS = 200
 
 # DYNAMITE
-DYNAMITE_IMAGE = "fetch/assets/images/104.png"
+DYNAMITE_IMAGE = [f"fetch/assets/images/{n:03}.png" for n in range(30, 32)]
 DYNAMITE_POINTS = -50
 
 # HEART
-HEART_IMAGE = "fetch/assets/images/040.png"
+HEART_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(40, 42)]
 HEART_POINTS = 100
 
 HEART_WIN_GROUP = "hearts"
@@ -158,6 +158,8 @@ HEART_WIN_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(60, 65)]
 HEART_WIN_WIDTH = 100
 HEART_WIN_HEIGHT = 100
 HEART_WIN_RATE = 25
+
+RATE_ITEMS = 5
 
 # KEYBOARD
 KEYBOARD_GROUP = "keyboars"
@@ -185,4 +187,4 @@ WARNING_1 = "Every 100 objects"
 WARNING_2 = "SPEED will increase"
 MOVE_DOG_1 = "To move your DOG"
 WIN_DOG_1 = "To WIN"
-WIN_DOG_2 = "Eat 500 objects"
+WIN_DOG_2 = "Fetch 500 objects"
