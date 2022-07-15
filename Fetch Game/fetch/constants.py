@@ -31,6 +31,7 @@ FONT_SIZE_TITLE = 60
 BOUNCE_SOUND = "fetch/assets/sounds/collision.wav"
 GAME_SOUND = "fetch/assets/sounds/game_sound.wav"
 OVER_SOUND = "fetch/assets/sounds/over.wav"
+WELCOME_SOUND = "fetch/assets/sounds/welcome_page.wav"
 
 
 # TEXT
@@ -86,11 +87,14 @@ RELEASE = 6
 
 # BACKGROUND
 BACKGROUND_GROUP = "background"
-BACKGROUND_LEVEL1 = "fetch/assets/images/level_1.png"
-BACKGROUND_LEVEL2 = "fetch/assets/images/level_2.png"
-BACKGROUND_LEVEL3 = "fetch/assets/images/level_3.png"
-BACKGROUND_FIRST = "fetch/assets/images/background.png"
-BACKGROUND_GAME_OVER = "fetch/assets/images/background_game_over.png"
+BACKGROUND_LEVEL1 = [f"fetch/assets/images/{n:03}.png" for n in range(140, 144)]
+BACKGROUND_LEVEL2 = [f"fetch/assets/images/{n:03}.png" for n in range(150, 151)]
+BACKGROUND_LEVEL3 = [f"fetch/assets/images/{n:03}.png" for n in range(160, 161)]
+BACKGROUND_FIRST_MENU = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
+BACKGROUND_INSTRUCTIONS = [f"fetch/assets/images/{n:03}.png" for n in range(135, 137)]
+BACKGROUND_GAME_OVER = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
+BACKGROUND = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
+BG_RATE = 15
 
 # STATS
 STATS_GROUP = "stats"
@@ -114,6 +118,10 @@ DOG_WIDTH = 200
 DOG_HEIGHT = 200
 DOG_RATE = 6
 DOG_VELOCITY = 7
+
+DOG_SAD_GROUP = "dogs_sad"
+DOG_SAD_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(190, 193)]
+DOG_SAD_RATE = 30
 
 # OWNER
 OWNER_GROUP = "owners"
@@ -145,7 +153,7 @@ HEART_POINTS = 100
 
 # DIALOG
 DIALOG_GROUP = "dialogs"
-ENTER_TO_START = "PRESS ENTER TO START"
+ENTER_TO_START = "ENTER TO START"
 PREP_TO_LAUNCH = "PREPARING TO LAUNCH"
 WAS_GOOD_GAME = "GAME OVER"
 
@@ -153,6 +161,6 @@ WAS_GOOD_GAME = "GAME OVER"
 BONE_INSTRUCTIONS = "BONE / 50 points"
 BONE_MEAT_INSTRUCTIONS = "BONE WITH MEAT / 200 points"
 DYNAMITE_INSTRUCTIONS = "DYNAMITE / -50 points"
-FIRST_MENU_INSTRUCTIONS = "m - for menu"
-RESTART_INSTRUCTIONS = "r - for restart"
-SHOW_INSTRUCTIONS = "h - for instructions"
+FIRST_MENU_INSTRUCTIONS = "M - Principal Menu"
+RESTART_INSTRUCTIONS = "R - Restart"
+SHOW_INSTRUCTIONS = "H - Instructions"
