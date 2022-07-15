@@ -32,6 +32,7 @@ BOUNCE_SOUND = "fetch/assets/sounds/collision.wav"
 GAME_SOUND = "fetch/assets/sounds/game_sound.wav"
 OVER_SOUND = "fetch/assets/sounds/over.wav"
 WELCOME_SOUND = "fetch/assets/sounds/welcome_page.wav"
+NEW_LEVEL_SOUND = "fetch/assets/sounds/start.wav"
 
 
 # TEXT

@@ -1,11 +1,13 @@
 
 from constants import *
 from game.scripting.action import Action
+from game.casting.sound import Sound
 
 
 class DrawBonesAction(Action):
 
-    def __init__(self, video_service):
+    def __init__(self, video_service, audio_service):
+        self._audio_service = audio_service
         self._video_service = video_service
         self._bones_shown = []
         self._counter = 0
@@ -39,6 +41,11 @@ class DrawBonesAction(Action):
                     print()
 
                     if self._counter == 100:
+                        sound = Sound(NEW_LEVEL_SOUND)
+                        self._audio_service.play_sound(sound)
+                        sound = Sound(GAME_SOUND)
+                        self._audio_service.play_sound(sound)
+                        
                         stats = cast.get_first_actor(STATS_GROUP)
                         stats.next_level()
                         self._counter = 0
