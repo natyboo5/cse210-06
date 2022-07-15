@@ -346,7 +346,7 @@ class SceneManager:
 
     def _add_owner(self, cast):
         cast.clear_actors(OWNER_GROUP)
-        x = 0
+        x = -15
         y = (SCREEN_HEIGHT / 2)
         position = Point(x, y)
         size = Point(OWNER_WIDTH, OWNER_HEIGHT)

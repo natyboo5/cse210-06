@@ -22,7 +22,7 @@ FIELD_LEFT = 0
 FIELD_RIGHT = SCREEN_WIDTH
 
 # FONT
-FONT = "fetch/assets/fonts/BeatWordDemo-nRL20.ttf"
+FONT = "fetch/assets/fonts/Montserrat-Bold.otf"
 FONT_SMALL = 32
 FONT_LARGE = 48
 FONT_SIZE_TITLE = 60
