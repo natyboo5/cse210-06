@@ -8,6 +8,7 @@ from game.casting.image import Image
 from game.casting.label import Label
 from game.casting.point import Point
 from game.casting.dog import Dog
+from game.casting.dog_sad import DogSad
 from game.casting.owner import Owner
 from game.casting.stats import Stats
 from game.casting.text import Text
@@ -22,6 +23,7 @@ from game.scripting.draw_bones_action import DrawBonesAction
 from game.scripting.draw_dialog_action import DrawDialogAction
 from game.scripting.draw_hud_action import DrawHudAction
 from game.scripting.draw_dog_action import DrawDogAction
+from game.scripting.draw_dog_sad_action import DrawDogSadAction
 from game.scripting.draw_owner_action import DrawOwnerAction
 from game.scripting.draw_background_action import DrawBackgroundAction
 from game.scripting.end_drawing_action import EndDrawingAction
@@ -59,6 +61,7 @@ class SceneManager:
     DRAW_DIALOG_ACTION = DrawDialogAction(VIDEO_SERVICE)
     DRAW_HUD_ACTION = DrawHudAction(VIDEO_SERVICE)
     DRAW_DOG_ACTION = DrawDogAction(VIDEO_SERVICE)
+    DRAW_DOG_SAD_ACTION = DrawDogSadAction(VIDEO_SERVICE)
     DRAW_OWNER_ACTION = DrawOwnerAction(VIDEO_SERVICE)
     DRAW_BACKGROUND_ACTION = DrawBackgroundAction(VIDEO_SERVICE)
     END_DRAWING_ACTION = EndDrawingAction(VIDEO_SERVICE)
@@ -248,6 +251,8 @@ class SceneManager:
                          ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 400), True)
 
         self._add_background(cast, BACKGROUND_GAME_OVER)
+        self._add_dog_sad(cast,CENTER_X - DOG_WIDTH / 1.5, CENTER_Y - DOG_HEIGHT)
+
 
         script.clear_actions(INPUT)
         script.add_action(INPUT, ChangeSceneAction(
@@ -258,7 +263,8 @@ class SceneManager:
 
         draw = [
             self.DRAW_BACKGROUND_ACTION,
-            self.DRAW_DIALOG_ACTION
+            self.DRAW_DIALOG_ACTION,
+            self.DRAW_DOG_SAD_ACTION
         ]
 
         self._add_output_script(script, draw)
@@ -293,7 +299,7 @@ class SceneManager:
             size = Point(BONE_WIDTH, BONE_HEIGHT)
 
             vel_x = random.randrange(-3, 9)
-            vel_y = int((i+900)*0.01)
+            vel_y = int((i+600)*0.01)
 
             velocity = Point(vel_y, vel_x)
             type_of_bone = random.randrange(0, 4)
@@ -345,6 +351,18 @@ class SceneManager:
         animation = Animation(DOG_IMAGES, DOG_RATE)
         dog = Dog(body, animation)
         cast.add_actor(DOG_GROUP, dog)
+
+
+    def _add_dog_sad(self, cast, dog_x, dog_y):
+        cast.clear_actors(DOG_SAD_GROUP)
+        position = Point(dog_x, dog_y)
+        size = Point(DOG_WIDTH, DOG_HEIGHT)
+        velocity = Point(0, 0)
+        body = Body(position, size, velocity)
+        animation = Animation(DOG_SAD_IMAGES, DOG_SAD_RATE)
+        dog = DogSad(body, animation)
+        cast.add_actor(DOG_SAD_GROUP, dog)
+
 
     def _add_owner(self, cast):
         cast.clear_actors(OWNER_GROUP)

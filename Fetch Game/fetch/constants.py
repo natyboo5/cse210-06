@@ -119,6 +119,10 @@ DOG_HEIGHT = 200
 DOG_RATE = 6
 DOG_VELOCITY = 7
 
+DOG_SAD_GROUP = "dogs_sad"
+DOG_SAD_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(190, 193)]
+DOG_SAD_RATE = 30
+
 # OWNER
 OWNER_GROUP = "owners"
 OWNER_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(108, 111)]
