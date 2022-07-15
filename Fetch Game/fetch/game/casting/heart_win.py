@@ -3,7 +3,7 @@ from game.casting.actor import Actor
 from game.casting.point import Point
 
 
-class Owner(Actor):
+class HeartWin(Actor):
     """A implement used to hit and bounce the ball in the game."""
     
     def __init__(self, body, animation, debug = False):

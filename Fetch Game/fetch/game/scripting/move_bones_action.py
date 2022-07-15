@@ -7,7 +7,7 @@ class MoveBonesAction(Action):
 
     def __init__(self):
         pass
-        
+
     def execute(self, cast, script, callback):
         bones = cast.get_actors(BONE_GROUP)
 
