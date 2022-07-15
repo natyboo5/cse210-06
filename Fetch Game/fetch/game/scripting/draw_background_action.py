@@ -15,7 +15,8 @@ class DrawBackgroundAction(Action):
         if background.is_debug():
             rectangle = body.get_rectangle()
             self._video_service.draw_rectangle(rectangle, PURPLE)
-            
-        image = background.get_image()
+
+        animation = background.get_animation()
+        image = animation.next_image()
         position = body.get_position()
         self._video_service.draw_image(image, position)

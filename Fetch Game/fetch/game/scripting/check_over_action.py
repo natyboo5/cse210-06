@@ -11,11 +11,8 @@ class CheckOverAction(Action):
         bones = cast.get_actors(BONE_GROUP)
         stats = cast.get_first_actor(STATS_GROUP)
 
-        if len(bones) == 0 or stats.get_lives() == 0:
+        if stats.get_lives() == 0:
             callback.on_next(GAME_OVER)
-
         
-        # if len(bones) == 0:
-        #     callback.on_next(TRY_AGAIN)
-        #     stats.next_level()
-        #     callback.on_next(NEXT_LEVEL)
+        if len(bones) < 1500:
+            callback.on_next(GAME_OVER_WIN)

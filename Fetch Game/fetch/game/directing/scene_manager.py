@@ -8,7 +8,10 @@ from game.casting.image import Image
 from game.casting.label import Label
 from game.casting.point import Point
 from game.casting.dog import Dog
-from game.casting.owner import Owner ###
+from game.casting.dog_sad import DogSad
+from game.casting.keyboard import Keyboard
+from game.casting.heart_win import HeartWin
+from game.casting.owner import Owner
 from game.casting.stats import Stats
 from game.casting.text import Text
 from game.casting.background import Background
@@ -22,8 +25,11 @@ from game.scripting.draw_bones_action import DrawBonesAction
 from game.scripting.draw_dialog_action import DrawDialogAction
 from game.scripting.draw_hud_action import DrawHudAction
 from game.scripting.draw_dog_action import DrawDogAction
-from game.scripting.draw_owner_action import DrawOwnerAction ####
+from game.scripting.draw_dog_sad_action import DrawDogSadAction
+from game.scripting.draw_keyboard_action import DrawKeyboardAction
+from game.scripting.draw_owner_action import DrawOwnerAction
 from game.scripting.draw_background_action import DrawBackgroundAction
+from game.scripting.draw_heart_win_action import DrawHeartWinAction
 from game.scripting.end_drawing_action import EndDrawingAction
 from game.scripting.initialize_devices_action import InitializeDevicesAction
 from game.scripting.load_assets_action import LoadAssetsAction
@@ -49,7 +55,8 @@ class SceneManager:
     VIDEO_SERVICE = RaylibVideoService(GAME_NAME, SCREEN_WIDTH, SCREEN_HEIGHT)
 
     CHECK_OVER_ACTION = CheckOverAction()
-    COLLIDE_BORDERS_ACTION = CollideBordersAction(PHYSICS_SERVICE, AUDIO_SERVICE)
+    COLLIDE_BORDERS_ACTION = CollideBordersAction(
+        PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_DOG_ACTION = CollideDogAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_DOG_ACTION = CollideBoneAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_BONES_ACTION = CollideBoneAction(PHYSICS_SERVICE, AUDIO_SERVICE)
@@ -57,11 +64,15 @@ class SceneManager:
     DRAW_BONES_ACTION = DrawBonesAction(VIDEO_SERVICE)
     DRAW_DIALOG_ACTION = DrawDialogAction(VIDEO_SERVICE)
     DRAW_HUD_ACTION = DrawHudAction(VIDEO_SERVICE)
-    DRAW_DOG_ACTION= DrawDogAction(VIDEO_SERVICE)
-    DRAW_OWNER_ACTION= DrawOwnerAction(VIDEO_SERVICE) ###
+    DRAW_DOG_ACTION = DrawDogAction(VIDEO_SERVICE)
+    DRAW_DOG_SAD_ACTION = DrawDogSadAction(VIDEO_SERVICE)
+    DRAW_KEYBOARD_ACTION= DrawKeyboardAction(VIDEO_SERVICE)
+    DRAW_OWNER_ACTION = DrawOwnerAction(VIDEO_SERVICE)
     DRAW_BACKGROUND_ACTION = DrawBackgroundAction(VIDEO_SERVICE)
+    DRAW_HEART_WIN_ACTION = DrawHeartWinAction(VIDEO_SERVICE)
     END_DRAWING_ACTION = EndDrawingAction(VIDEO_SERVICE)
-    INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
+    INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(
+        AUDIO_SERVICE, VIDEO_SERVICE)
     LOAD_ASSETS_ACTION = LoadAssetsAction(AUDIO_SERVICE, VIDEO_SERVICE)
     MOVE_BONES_ACTION = MoveBonesAction()
     MOVE_DOG_ACTION = MoveDogAction()
@@ -76,7 +87,7 @@ class SceneManager:
         if scene == NEW_GAME:
             self._prepare_new_game(cast, script)
         elif scene == FIRST_MENU:
-            self._prepare_first_menu(cast, script)
+            self._prepare_help(cast, script)
         elif scene == NEXT_LEVEL:
             self._prepare_next_level(cast, script)
         elif scene == TRY_AGAIN:
@@ -85,6 +96,8 @@ class SceneManager:
             self._prepare_in_play(cast, script)
         elif scene == GAME_OVER:
             self._prepare_game_over(cast, script)
+        elif scene == GAME_OVER_WIN:
+            self._prepare_game_over_win(cast, script)
 
     # ----------------------------------------------------------------------------------------------
     # scene methods
@@ -92,73 +105,98 @@ class SceneManager:
 
     def _prepare_new_game(self, cast, script):
 
-        # self._add_stats(cast)
-        # self._add_level(cast)
-        # self._add_lives(cast)
-        # self._add_score(cast)
-        # self._add_bones(cast)
-        # self._add_dog(cast)
-        # self._add_owner(cast)
-
         cast.clear_actors(DIALOG_GROUP)
-        #script.clear_actions(INPUT)
 
-        self._add_dialog(cast, GAME_NAME, FONT,
-                         FONT_SIZE_TITLE, ALIGN_CENTER, Point(CENTER_X, 200))
         self._add_dialog(cast, ENTER_TO_START, FONT, FONT_LARGE,
                          ALIGN_CENTER, Point(CENTER_X, CENTER_Y), True)
         self._add_dialog(cast, SHOW_INSTRUCTIONS, FONT, FONT_LARGE,
-                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 100), True)
+                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 220), True)
         self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_LARGE,
-                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 200), True)
+                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 300), True)
 
-        self._add_background(cast, BACKGROUND_FIRST)
+        self._add_background(cast, BACKGROUND_FIRST_MENU)
 
         script.clear_actions(INPUT)
-        script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEXT_LEVEL, ENTER))
-        script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, FIRST_MENU, HELP))
+        script.add_action(INPUT, ChangeSceneAction(
+            self.KEYBOARD_SERVICE, NEXT_LEVEL, ENTER))
+        script.add_action(INPUT, ChangeSceneAction(
+            self.KEYBOARD_SERVICE, FIRST_MENU, HELP))
 
         self._add_initialize_script(script)
         self._add_load_script(script)
 
         draw = [
-                    self.DRAW_BACKGROUND_ACTION,
-                    self.DRAW_DIALOG_ACTION
-                ]
+            self.DRAW_BACKGROUND_ACTION,
+            self.DRAW_DIALOG_ACTION
+        ]
 
         self._add_output_script(script, draw)
 
         self._add_unload_script(script)
         self._add_release_script(script)
 
-    def _prepare_first_menu(self, cast, script):
+        script.add_action(OUTPUT, PlaySoundAction(
+            self.AUDIO_SERVICE, WELCOME_SOUND))
+
+    def _prepare_help(self, cast, script):
         cast.clear_actors(DIALOG_GROUP)
 
-        self._add_dialog(cast, BONE_INSTRUCTIONS, FONT,
-                         FONT_SMALL, ALIGN_CENTER, Point(CENTER_X, CENTER_Y), True)
+        # POINTS
+        self._add_dialog(cast, HEART_INSTRUCTIONS, FONT,
+                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 430), True)
         self._add_dialog(cast, BONE_MEAT_INSTRUCTIONS, FONT,
-                         FONT_SMALL, ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 100), True)
+                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 540), True)
+        self._add_dialog(cast, BONE_INSTRUCTIONS, FONT,
+                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 660), True)
         self._add_dialog(cast, DYNAMITE_INSTRUCTIONS, FONT,
-                         FONT_SMALL, ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 200), True)
+                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 780), True)
 
-        # how to go to menu
-        self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_LARGE,
-                         ALIGN_CENTER, Point(CENTER_X, 200), True)
+        # MENU
+        self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_SMALL,
+                         ALIGN_CENTER, Point(120, CENTER_Y + 50), True)
 
-        self._add_background(cast, BACKGROUND_FIRST)
+        # WARNING
+        self._add_dialog(cast, WARNING_1, FONT, FONT_SMALL,
+                         ALIGN_RIGHT, Point(CENTER_X + 560, 100), True)
+        self._add_dialog(cast, WARNING_2, FONT, FONT_SMALL,
+                         ALIGN_RIGHT, Point(CENTER_X + 570, 150), True)
 
-        # actions to move to other scenes
+        # MOVE DOG
+        self._add_dialog(cast, MOVE_DOG_1, FONT, FONT_SMALL,
+                         ALIGN_RIGHT, Point(CENTER_X + 620, 680), True)
+
+        # HOW TO WIN
+        self._add_dialog(cast, WIN_DOG_1, FONT, FONT_SMALL,
+                         ALIGN_LEFT, Point(90, CENTER_Y + 350), True)
+        self._add_dialog(cast, WIN_DOG_2, FONT, FONT_SMALL,
+                         ALIGN_LEFT, Point(40, CENTER_Y + 400), True)
+
+        # BACKGROUND
+        self._add_background(cast, BACKGROUND_INSTRUCTIONS)
+
+        # DOG WITH ANIMATION
+        self._add_dog(cast, 20, 20)
+
+        # KEYBOARD WITH ANIMATION 
+        self._add_keyboard(cast, 1050, 700)
+        
+        # MOVE TO OTHERS SCENES
         script.clear_actions(INPUT)
         script.clear_actions(UPDATE)
-        script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEW_GAME, MENU))
+        script.add_action(INPUT, ChangeSceneAction(
+            self.KEYBOARD_SERVICE, NEW_GAME, MENU))
 
         draw = [
-                    self.DRAW_BACKGROUND_ACTION,
-                    self.DRAW_DIALOG_ACTION
-                ]
+            self.DRAW_BACKGROUND_ACTION,
+            self.DRAW_DIALOG_ACTION,
+            self.DRAW_DOG_ACTION,
+            self.DRAW_KEYBOARD_ACTION
+        ]
 
         self._add_output_script(script, draw)
 
+        script.add_action(OUTPUT, PlaySoundAction(
+            self.AUDIO_SERVICE, WELCOME_SOUND))
 
     def _prepare_next_level(self, cast, script):
         self._add_stats(cast)
@@ -168,28 +206,30 @@ class SceneManager:
         self._add_lives(cast)
         self._add_score(cast)
         self._add_bones(cast)
-        self._add_dog(cast)
+        self._add_dog(cast, GAME_DOG_X, GAME_DOG_Y)
         self._add_owner(cast)
 
         self._add_background(cast, BACKGROUND_LEVEL1)
 
-        self._add_dialog(cast, PREP_TO_LAUNCH, FONT,FONT_SMALL, ALIGN_CENTER, Point(CENTER_X, CENTER_Y))
+        self._add_dialog(cast, PREP_TO_LAUNCH, FONT, FONT_SMALL,
+                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y))
 
         script.clear_actions(INPUT)
         script.add_action(INPUT, TimedChangeSceneAction(IN_PLAY, 2))
 
         draw = [
-                    self.DRAW_BACKGROUND_ACTION,
-                    self.DRAW_HUD_ACTION,
-                    self.DRAW_BONES_ACTION,
-                    self.DRAW_OWNER_ACTION,
-                    self.DRAW_DOG_ACTION,
-                    self.DRAW_DIALOG_ACTION
-                ]
+            self.DRAW_BACKGROUND_ACTION,
+            self.DRAW_HUD_ACTION,
+            self.DRAW_BONES_ACTION,
+            self.DRAW_OWNER_ACTION,
+            self.DRAW_DOG_ACTION,
+            self.DRAW_DIALOG_ACTION
+        ]
 
         self._add_output_script(script, draw)
 
-        script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND))
+        script.add_action(OUTPUT, PlaySoundAction(
+            self.AUDIO_SERVICE, GAME_SOUND))
 
     def _prepare_try_again(self, cast, script):
         # self._add_bones(cast)
@@ -206,52 +246,85 @@ class SceneManager:
 
         script.add_action(INPUT, TimedChangeSceneAction(IN_PLAY, 2))
 
-        #self._add_update_script(script)
+        # self._add_update_script(script)
         self._add_output_script(script)
-
 
     def _prepare_in_play(self, cast, script):
         cast.clear_actors(DIALOG_GROUP)
 
         script.clear_actions(INPUT)
         script.add_action(INPUT, self.CONTROL_DOG_ACTION)
-        script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEXT_LEVEL, RESTART))
-        script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEW_GAME, MENU))
+        script.add_action(INPUT, ChangeSceneAction(
+            self.KEYBOARD_SERVICE, NEXT_LEVEL, RESTART))
+        script.add_action(INPUT, ChangeSceneAction(
+            self.KEYBOARD_SERVICE, NEW_GAME, MENU))
         self._add_update_script(script)
-        #self._add_output_script(script)
 
         draw = [
-                    self.DRAW_BACKGROUND_ACTION,
-                    self.DRAW_HUD_ACTION,
-                    self.DRAW_BONES_ACTION,
-                    self.DRAW_OWNER_ACTION,
-                    self.DRAW_DOG_ACTION,
-                    self.DRAW_DIALOG_ACTION
-                ]
-
+            self.DRAW_BACKGROUND_ACTION,
+            self.DRAW_HUD_ACTION,
+            self.DRAW_BONES_ACTION,
+            self.DRAW_OWNER_ACTION,
+            self.DRAW_DOG_ACTION,
+            self.DRAW_DIALOG_ACTION
+        ]
 
         self._add_output_script(script, draw)
 
-
     def _prepare_game_over(self, cast, script):
         cast.clear_actors(DIALOG_GROUP)
-
-        # self._add_bones(cast)
-        # self._add_dog(cast)
-        # self._add_owner(cast)
-
         stats = cast.get_first_actor(STATS_GROUP)
 
         self._add_dialog(cast, WAS_GOOD_GAME, FONT,
-                         FONT_LARGE, ALIGN_CENTER, Point(CENTER_X, 150))
+                         FONT_LARGE, ALIGN_CENTER, Point(CENTER_X, 100))
         self._add_dialog(cast, "FINAL SCORE  " + str(stats.get_score()),
                          FONT, FONT_LARGE, ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 200), True)
         self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_SMALL,
-                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 300), True)
+                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 350), True)
         self._add_dialog(cast, RESTART_INSTRUCTIONS, FONT, FONT_SMALL,
                          ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 400), True)
 
         self._add_background(cast, BACKGROUND_GAME_OVER)
+        self._add_dog_sad(cast,CENTER_X - DOG_WIDTH / 1.5, CENTER_Y - DOG_HEIGHT)
+
+
+        script.clear_actions(INPUT)
+        script.add_action(INPUT, ChangeSceneAction(
+            self.KEYBOARD_SERVICE, NEXT_LEVEL, RESTART))
+        script.add_action(INPUT, ChangeSceneAction(
+            self.KEYBOARD_SERVICE, NEW_GAME, MENU))
+        script.clear_actions(UPDATE)
+
+        draw = [
+            self.DRAW_BACKGROUND_ACTION,
+            self.DRAW_DIALOG_ACTION,
+            self.DRAW_DOG_SAD_ACTION
+        ]
+
+        self._add_output_script(script, draw)
+
+        script.add_action(OUTPUT, PlaySoundAction(
+            self.AUDIO_SERVICE, WELCOME_SOUND))
+
+
+    def _prepare_game_over_win(self, cast, script):
+        cast.clear_actors(DIALOG_GROUP)
+
+        stats = cast.get_first_actor(STATS_GROUP)
+
+        self._add_dialog(cast, WAS_GOOD_GAME_WIN, FONT,
+                         FONT_LARGE, ALIGN_CENTER, Point(CENTER_X, 50))
+        self._add_dialog(cast, "FINAL SCORE : " + str(stats.get_score()),
+                         FONT, FONT_LARGE, ALIGN_CENTER, Point(CENTER_X, 150), True)
+        self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_SMALL,
+                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 350), True)
+        self._add_dialog(cast, RESTART_INSTRUCTIONS, FONT, FONT_SMALL,
+                         ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 400), True)
+
+        self._add_background(cast, BACKGROUND_GAME_OVER_WIN)
+        
+        # ANIMATION HEART
+        self._add_heart_win(cast, CENTER_X - 260, CENTER_Y - 200)
 
         script.clear_actions(INPUT)
         script.add_action(INPUT, ChangeSceneAction(self.KEYBOARD_SERVICE, NEXT_LEVEL, RESTART))
@@ -260,10 +333,12 @@ class SceneManager:
 
         draw = [
             self.DRAW_BACKGROUND_ACTION,
-            self.DRAW_DIALOG_ACTION
+            self.DRAW_DIALOG_ACTION,
+            self.DRAW_HEART_WIN_ACTION
         ]
 
         self._add_output_script(script, draw)
+
 
     # ----------------------------------------------------------------------------------------------
     # casting methods
@@ -275,9 +350,10 @@ class SceneManager:
         y = 0
         position = Point(x, y)
         size = Point(SCREEN_WIDTH, SCREEN_HEIGHT)
-        body = Body(position, size)
-        image = Image(image_path)
-        background = Background(body, image, True)
+        velocity = Point(0, 3)
+        body = Body(position, size, velocity)
+        animation = Animation(image_path, BG_RATE)
+        background = Background(body, animation)
         cast.add_actor(BACKGROUND_GROUP, background)
 
     def _add_bones(self, cast):
@@ -291,7 +367,7 @@ class SceneManager:
             size = Point(BONE_WIDTH, BONE_HEIGHT)
 
             vel_x = random.randrange(-3, 9)
-            vel_y = int((i+1000)*0.01)
+            vel_y = int((i+700)*0.01)
 
             velocity = Point(vel_y, vel_x)
             type_of_bone = random.randrange(0, 4)
@@ -332,11 +408,11 @@ class SceneManager:
         stats = Stats()
         cast.add_actor(STATS_GROUP, stats)
 
-    def _add_dog(self, cast):
+    def _add_dog(self, cast, dog_x, dog_y):
         cast.clear_actors(DOG_GROUP)
         x = SCREEN_WIDTH - DOG_WIDTH * 1.5
         y = SCREEN_HEIGHT - DOG_HEIGHT * 1.3
-        position = Point(x, y)
+        position = Point(dog_x, dog_y)
         size = Point(DOG_WIDTH, DOG_HEIGHT)
         velocity = Point(0, 0)
         body = Body(position, size, velocity)
@@ -344,9 +420,21 @@ class SceneManager:
         dog = Dog(body, animation)
         cast.add_actor(DOG_GROUP, dog)
 
+
+    def _add_dog_sad(self, cast, dog_x, dog_y):
+        cast.clear_actors(DOG_SAD_GROUP)
+        position = Point(dog_x, dog_y)
+        size = Point(DOG_WIDTH, DOG_HEIGHT)
+        velocity = Point(0, 0)
+        body = Body(position, size, velocity)
+        animation = Animation(DOG_SAD_IMAGES, DOG_SAD_RATE)
+        dog = DogSad(body, animation)
+        cast.add_actor(DOG_SAD_GROUP, dog)
+
+
     def _add_owner(self, cast):
         cast.clear_actors(OWNER_GROUP)
-        x = 0
+        x = -15
         y = (SCREEN_HEIGHT / 2)
         position = Point(x, y)
         size = Point(OWNER_WIDTH, OWNER_HEIGHT)
@@ -356,9 +444,31 @@ class SceneManager:
         owner = Owner(body, animation)
         cast.add_actor(OWNER_GROUP, owner)
 
+
+    def _add_keyboard(self, cast, keyboard_x, keyboard_y):
+        cast.clear_actors(KEYBOARD_GROUP)
+        position = Point(keyboard_x, keyboard_y)
+        size = Point(KEYBOARD_WIDTH, KEYBOARD_HEIGHT)
+        velocity = Point(0, 0)
+        body = Body(position, size, velocity)
+        animation = Animation(KEYBOARD_IMAGES, KEYBOARD_RATE)
+        keyboard = Keyboard(body, animation)
+        cast.add_actor(KEYBOARD_GROUP, keyboard)
+
+    def _add_heart_win(self, cast, heart_win_x, heart_win_y):
+        cast.clear_actors(HEART_WIN_GROUP)
+        position = Point(heart_win_x, heart_win_y)
+        size = Point(HEART_WIN_WIDTH, HEART_WIN_HEIGHT)
+        velocity = Point(0, 0)
+        body = Body(position, size, velocity)
+        animation = Animation(HEART_WIN_IMAGES, HEART_WIN_RATE)
+        heart_win = HeartWin(body, animation)
+        cast.add_actor(HEART_WIN_GROUP, heart_win)
+
     # ----------------------------------------------------------------------------------------------
     # scripting methods
     # ----------------------------------------------------------------------------------------------
+   
     def _add_initialize_script(self, script):
         script.clear_actions(INITIALIZE)
         script.add_action(INITIALIZE, self.INITIALIZE_DEVICES_ACTION)
