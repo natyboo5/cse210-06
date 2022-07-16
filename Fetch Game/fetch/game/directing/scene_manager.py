@@ -222,7 +222,7 @@ class SceneManager:
         self._add_score(cast)
         self._add_bones(cast)
         self._add_dog(cast, GAME_DOG_X, GAME_DOG_Y)
-        self._add_owner(cast)
+        self._add_owner(cast, OWNER_GAME_X, OWNER_GAME_Y)
 
         self._add_background(cast, BACKGROUND_LEVEL1)
         self._add_swing_level1(cast)
@@ -249,9 +249,6 @@ class SceneManager:
             self.AUDIO_SERVICE, GAME_SOUND))
 
     def _prepare_try_again(self, cast, script):
-        # self._add_bones(cast)
-        # self._add_dog(cast)
-        # self._add_owner(cast)
 
         self._add_dialog(cast, WAS_GOOD_GAME, FONT,
                          FONT_SMALL, ALIGN_CENTER, Point(CENTER_X, CENTER_Y))
@@ -342,6 +339,12 @@ class SceneManager:
 
         self._add_background(cast, BACKGROUND_GAME_OVER_WIN)
         
+        # DOG WITH ANIMATION
+        self._add_dog(cast, DOG_WIN_GAME_X, DOG_WIN_GAME_Y)
+
+        # OWNER WITH ANIMATION
+        self._add_owner(cast, OWNER_WIN_GAME_X, OWNER_WIN_GAME_Y)
+
         # ANIMATION HEART
         self._add_heart_win(cast, CENTER_X - 260, CENTER_Y - 200)
 
@@ -353,6 +356,8 @@ class SceneManager:
         draw = [
             self.DRAW_BACKGROUND_ACTION,
             self.DRAW_DIALOG_ACTION,
+            self.DRAW_DOG_ACTION,
+            self.DRAW_OWNER_ACTION,
             self.DRAW_HEART_WIN_ACTION
         ]
 
@@ -473,10 +478,8 @@ class SceneManager:
         dog = DogSad(body, animation)
         cast.add_actor(DOG_SAD_GROUP, dog)
 
-    def _add_owner(self, cast):
+    def _add_owner(self, cast, x, y):
         cast.clear_actors(OWNER_GROUP)
-        x = -15
-        y = (SCREEN_HEIGHT / 2)
         position = Point(x, y)
         size = Point(OWNER_WIDTH, OWNER_HEIGHT)
         velocity = Point(0, 3)

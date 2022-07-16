@@ -95,7 +95,7 @@ BACKGROUND_LEVEL3 = "fetch/assets/images/160.png"
 BACKGROUND_FIRST_MENU = "fetch/assets/images/000.png"
 BACKGROUND_INSTRUCTIONS = "fetch/assets/images/000.png"
 BACKGROUND_GAME_OVER = "fetch/assets/images/000.png"
-BACKGROUND_GAME_OVER_WIN = "fetch/assets/images/125.png"
+BACKGROUND_GAME_OVER_WIN = "fetch/assets/images/000.png"
 BACKGROUND = "fetch/assets/images/000.png"
 BG_RATE = 15
 
@@ -123,6 +123,8 @@ DOG_RATE = 6
 DOG_VELOCITY = 10
 GAME_DOG_X = SCREEN_WIDTH - DOG_WIDTH * 1.5
 GAME_DOG_Y = SCREEN_HEIGHT - DOG_HEIGHT * 1.3
+DOG_WIN_GAME_X = CENTER_X + 50
+DOG_WIN_GAME_Y = CENTER_Y
 
 DOG_SAD_GROUP = "dogs_sad"
 DOG_SAD_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(190, 193)]
@@ -130,10 +132,14 @@ DOG_SAD_RATE = 30
 
 # OWNER
 OWNER_GROUP = "owners"
-OWNER_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(108, 110)]
+OWNER_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(108, 111)]
 OWNER_WIDTH = 20
 OWNER_HEIGHT = 20
-OWNER_RATE = 10
+OWNER_RATE = 25
+OWNER_GAME_X = -15
+OWNER_GAME_Y = (SCREEN_HEIGHT / 2)
+OWNER_WIN_GAME_X = CENTER_X - 330
+OWNER_WIN_GAME_Y = CENTER_Y - 150
 
 # BONE
 BONE_GROUP = "bones"
