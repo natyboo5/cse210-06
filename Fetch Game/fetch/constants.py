@@ -93,7 +93,7 @@ BACKGROUND_LEVEL1 = "fetch/assets/images/140.png"
 BACKGROUND_LEVEL2 = "fetch/assets/images/150.png"
 BACKGROUND_LEVEL3 = "fetch/assets/images/160.png"
 BACKGROUND_FIRST_MENU = "fetch/assets/images/000.png"
-BACKGROUND_INSTRUCTIONS = "fetch/assets/images/135.png"
+BACKGROUND_INSTRUCTIONS = "fetch/assets/images/000.png"
 BACKGROUND_GAME_OVER = "fetch/assets/images/000.png"
 BACKGROUND_GAME_OVER_WIN = "fetch/assets/images/125.png"
 BACKGROUND = "fetch/assets/images/000.png"
@@ -145,6 +145,10 @@ BONE_WIDTH = 50
 BONE_HEIGHT = 51
 BONE_POINTS = 50
 BONE_MEAT_POINTS = 200
+
+# BONE HELP
+BONE_HELP_GROUP = "randomimage"
+RATE_ITEMS_HELP = 20
 
 # DYNAMITE
 DYNAMITE_IMAGE = [f"fetch/assets/images/{n:03}.png" for n in range(30, 32)]

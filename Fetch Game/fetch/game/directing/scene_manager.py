@@ -17,6 +17,7 @@ from game.casting.text import Text
 from game.casting.background import Background
 from game.casting.fetch_title import FetchTitle
 from game.casting.swing import Swing
+from game.casting.bone_help import BoneHelp
 from game.scripting.change_scene_action import ChangeSceneAction
 from game.scripting.check_over_action import CheckOverAction
 from game.scripting.collide_borders_action import CollideBordersAction
@@ -34,6 +35,7 @@ from game.scripting.draw_background_action import DrawBackgroundAction
 from game.scripting.draw_heart_win_action import DrawHeartWinAction
 from game.scripting.draw_fetch_title_action import DrawFetchTitleAction
 from game.scripting.draw_swing_action import DrawSwingAction
+from game.scripting.draw_bone_help_action import DrawBoneHelpAction 
 from game.scripting.end_drawing_action import EndDrawingAction
 from game.scripting.initialize_devices_action import InitializeDevicesAction
 from game.scripting.load_assets_action import LoadAssetsAction
@@ -76,6 +78,7 @@ class SceneManager:
     DRAW_HEART_WIN_ACTION = DrawHeartWinAction(VIDEO_SERVICE)
     DRAW_FETCH_TITLE_ACTION = DrawFetchTitleAction(VIDEO_SERVICE)
     DRAW_SWING_ACTION = DrawSwingAction(VIDEO_SERVICE)
+    DRAW_BONE_HELP_ACTION = DrawBoneHelpAction(VIDEO_SERVICE)
     END_DRAWING_ACTION = EndDrawingAction(VIDEO_SERVICE)
     INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(
         AUDIO_SERVICE, VIDEO_SERVICE)
@@ -151,13 +154,13 @@ class SceneManager:
 
         # POINTS
         self._add_dialog(cast, HEART_INSTRUCTIONS, FONT,
-                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 430), True)
+                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 360), True)
         self._add_dialog(cast, BONE_MEAT_INSTRUCTIONS, FONT,
-                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 540), True)
+                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 520), True)
         self._add_dialog(cast, BONE_INSTRUCTIONS, FONT,
-                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 660), True)
+                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 670), True)
         self._add_dialog(cast, DYNAMITE_INSTRUCTIONS, FONT,
-                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 780), True)
+                         FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 810), True)
 
         # MENU
         self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_SMALL,
@@ -172,6 +175,9 @@ class SceneManager:
         # MOVE DOG
         self._add_dialog(cast, MOVE_DOG_1, FONT, FONT_SMALL,
                          ALIGN_RIGHT, Point(CENTER_X + 620, 680), True)
+
+        # RANDOM IMAGE
+        self._add_bone_help(cast)
 
         # HOW TO WIN
         self._add_dialog(cast, WIN_DOG_1, FONT, FONT_SMALL,
@@ -198,7 +204,8 @@ class SceneManager:
             self.DRAW_BACKGROUND_ACTION,
             self.DRAW_DIALOG_ACTION,
             self.DRAW_DOG_ACTION,
-            self.DRAW_KEYBOARD_ACTION
+            self.DRAW_KEYBOARD_ACTION,
+            self.DRAW_BONE_HELP_ACTION
         ]
 
         self._add_output_script(script, draw)
@@ -377,7 +384,6 @@ class SceneManager:
         swing = Swing(body, animation)
         cast.add_actor(SWING_GROUP, swing)
 
-
     def _add_bones(self, cast):
         cast.clear_actors(BONE_GROUP)
 
@@ -397,6 +403,21 @@ class SceneManager:
             bone = Bone(body, i + 1, type_of_bone, True)
 
             cast.add_actor(BONE_GROUP, bone)
+
+    def _add_bone_help(self, cast):
+        cast.clear_actors(BONE_HELP_GROUP)
+        x = 200
+
+        for i in range(4):
+            x += 150
+            y = 400
+            
+            position = Point(y, x)
+            size = Point(BONE_WIDTH, BONE_HEIGHT)
+            body = Body(position, size)
+            bone = BoneHelp(body, i, True)
+
+            cast.add_actor(BONE_HELP_GROUP, bone)
 
     def _add_dialog(self, cast, message, file, size, alignment, p_position, multiple=False):
         if multiple == False:
@@ -442,7 +463,6 @@ class SceneManager:
         dog = Dog(body, animation)
         cast.add_actor(DOG_GROUP, dog)
 
-
     def _add_dog_sad(self, cast, dog_x, dog_y):
         cast.clear_actors(DOG_SAD_GROUP)
         position = Point(dog_x, dog_y)
@@ -452,7 +472,6 @@ class SceneManager:
         animation = Animation(DOG_SAD_IMAGES, DOG_SAD_RATE)
         dog = DogSad(body, animation)
         cast.add_actor(DOG_SAD_GROUP, dog)
-
 
     def _add_owner(self, cast):
         cast.clear_actors(OWNER_GROUP)
@@ -465,7 +484,6 @@ class SceneManager:
         animation = Animation(OWNER_IMAGES, OWNER_RATE)
         owner = Owner(body, animation)
         cast.add_actor(OWNER_GROUP, owner)
-
 
     def _add_keyboard(self, cast, keyboard_x, keyboard_y):
         cast.clear_actors(KEYBOARD_GROUP)
@@ -486,7 +504,6 @@ class SceneManager:
         animation = Animation(HEART_WIN_IMAGES, HEART_WIN_RATE)
         heart_win = HeartWin(body, animation)
         cast.add_actor(HEART_WIN_GROUP, heart_win)
-
 
     def _add_fetch_title(self, cast, fetch_title_x, fetch_title_y):
         cast.clear_actors(FETCH_TITLE_GROUP)
