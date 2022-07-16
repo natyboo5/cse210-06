@@ -15,6 +15,8 @@ from game.casting.owner import Owner
 from game.casting.stats import Stats
 from game.casting.text import Text
 from game.casting.background import Background
+from game.casting.fetch_title import FetchTitle
+from game.casting.swing import Swing
 from game.scripting.change_scene_action import ChangeSceneAction
 from game.scripting.check_over_action import CheckOverAction
 from game.scripting.collide_borders_action import CollideBordersAction
@@ -30,6 +32,8 @@ from game.scripting.draw_keyboard_action import DrawKeyboardAction
 from game.scripting.draw_owner_action import DrawOwnerAction
 from game.scripting.draw_background_action import DrawBackgroundAction
 from game.scripting.draw_heart_win_action import DrawHeartWinAction
+from game.scripting.draw_fetch_title_action import DrawFetchTitleAction
+from game.scripting.draw_swing_action import DrawSwingAction
 from game.scripting.end_drawing_action import EndDrawingAction
 from game.scripting.initialize_devices_action import InitializeDevicesAction
 from game.scripting.load_assets_action import LoadAssetsAction
@@ -70,6 +74,8 @@ class SceneManager:
     DRAW_OWNER_ACTION = DrawOwnerAction(VIDEO_SERVICE)
     DRAW_BACKGROUND_ACTION = DrawBackgroundAction(VIDEO_SERVICE)
     DRAW_HEART_WIN_ACTION = DrawHeartWinAction(VIDEO_SERVICE)
+    DRAW_FETCH_TITLE_ACTION = DrawFetchTitleAction(VIDEO_SERVICE)
+    DRAW_SWING_ACTION = DrawSwingAction(VIDEO_SERVICE)
     END_DRAWING_ACTION = EndDrawingAction(VIDEO_SERVICE)
     INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(
         AUDIO_SERVICE, VIDEO_SERVICE)
@@ -115,6 +121,7 @@ class SceneManager:
                          ALIGN_CENTER, Point(CENTER_X, CENTER_Y + 300), True)
 
         self._add_background(cast, BACKGROUND_FIRST_MENU)
+        self._add_fetch_title(cast, 890, 20)
 
         script.clear_actions(INPUT)
         script.add_action(INPUT, ChangeSceneAction(
@@ -127,7 +134,8 @@ class SceneManager:
 
         draw = [
             self.DRAW_BACKGROUND_ACTION,
-            self.DRAW_DIALOG_ACTION
+            self.DRAW_DIALOG_ACTION,
+            self.DRAW_FETCH_TITLE_ACTION
         ]
 
         self._add_output_script(script, draw)
@@ -210,6 +218,7 @@ class SceneManager:
         self._add_owner(cast)
 
         self._add_background(cast, BACKGROUND_LEVEL1)
+        self._add_swing_level1(cast)
 
         self._add_dialog(cast, PREP_TO_LAUNCH, FONT, FONT_SMALL,
                          ALIGN_CENTER, Point(CENTER_X, CENTER_Y))
@@ -223,7 +232,8 @@ class SceneManager:
             self.DRAW_BONES_ACTION,
             self.DRAW_OWNER_ACTION,
             self.DRAW_DOG_ACTION,
-            self.DRAW_DIALOG_ACTION
+            self.DRAW_DIALOG_ACTION,
+            self.DRAW_SWING_ACTION
         ]
 
         self._add_output_script(script, draw)
@@ -240,6 +250,7 @@ class SceneManager:
                          FONT_SMALL, ALIGN_CENTER, Point(CENTER_X, CENTER_Y))
 
         self._add_background(cast, BACKGROUND_LEVEL1)
+        self._add_swing_level1(cast)
 
         script.clear_actions(INPUT)
         script.clear_actions(UPDATE)
@@ -266,7 +277,8 @@ class SceneManager:
             self.DRAW_BONES_ACTION,
             self.DRAW_OWNER_ACTION,
             self.DRAW_DOG_ACTION,
-            self.DRAW_DIALOG_ACTION
+            self.DRAW_DIALOG_ACTION,
+            self.DRAW_SWING_ACTION
         ]
 
         self._add_output_script(script, draw)
@@ -350,11 +362,21 @@ class SceneManager:
         y = 0
         position = Point(x, y)
         size = Point(SCREEN_WIDTH, SCREEN_HEIGHT)
-        velocity = Point(0, 3)
-        body = Body(position, size, velocity)
-        animation = Animation(image_path, BG_RATE)
-        background = Background(body, animation)
+        body = Body(position, size)
+        image = Image(image_path)
+        background = Background(body, image, True)
         cast.add_actor(BACKGROUND_GROUP, background)
+
+    def _add_swing_level1(self, cast):
+        cast.clear_actors(SWING_GROUP)
+        position = Point(SWING_X, SWING_Y)
+        size = Point(SWING_WIDTH, SWING_HEIGHT)
+        velocity = Point(0, 0)
+        body = Body(position, size, velocity)
+        animation = Animation(SWING_IMAGES, SWING_RATE)
+        swing = Swing(body, animation)
+        cast.add_actor(SWING_GROUP, swing)
+
 
     def _add_bones(self, cast):
         cast.clear_actors(BONE_GROUP)
@@ -464,6 +486,17 @@ class SceneManager:
         animation = Animation(HEART_WIN_IMAGES, HEART_WIN_RATE)
         heart_win = HeartWin(body, animation)
         cast.add_actor(HEART_WIN_GROUP, heart_win)
+
+
+    def _add_fetch_title(self, cast, fetch_title_x, fetch_title_y):
+        cast.clear_actors(FETCH_TITLE_GROUP)
+        position = Point(fetch_title_x, fetch_title_y)
+        size = Point(FETCH_TITLE_WIDTH, FETCH_TITLE_HEIGHT)
+        velocity = Point(0, 0)
+        body = Body(position, size, velocity)
+        animation = Animation(FETCH_TITLE_IMAGES, FETCH_TITLE_RATE)
+        fetch_title = HeartWin(body, animation)
+        cast.add_actor(FETCH_TITLE_GROUP, fetch_title)
 
     # ----------------------------------------------------------------------------------------------
     # scripting methods

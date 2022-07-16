@@ -89,14 +89,14 @@ RELEASE = 6
 
 # BACKGROUND
 BACKGROUND_GROUP = "background"
-BACKGROUND_LEVEL1 = [f"fetch/assets/images/{n:03}.png" for n in range(140, 144)]
-BACKGROUND_LEVEL2 = [f"fetch/assets/images/{n:03}.png" for n in range(150, 151)]
-BACKGROUND_LEVEL3 = [f"fetch/assets/images/{n:03}.png" for n in range(160, 161)]
-BACKGROUND_FIRST_MENU = [f"fetch/assets/images/{n:03}.png" for n in range(1, 2)]
-BACKGROUND_INSTRUCTIONS = [f"fetch/assets/images/{n:03}.png" for n in range(135, 136)]
-BACKGROUND_GAME_OVER = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
-BACKGROUND_GAME_OVER_WIN = [f"fetch/assets/images/{n:03}.png" for n in range(125, 126)]
-BACKGROUND = [f"fetch/assets/images/{n:03}.png" for n in range(0, 1)]
+BACKGROUND_LEVEL1 = "fetch/assets/images/140.png"
+BACKGROUND_LEVEL2 = "fetch/assets/images/150.png"
+BACKGROUND_LEVEL3 = "fetch/assets/images/160.png"
+BACKGROUND_FIRST_MENU = "fetch/assets/images/000.png"
+BACKGROUND_INSTRUCTIONS = "fetch/assets/images/135.png"
+BACKGROUND_GAME_OVER = "fetch/assets/images/000.png"
+BACKGROUND_GAME_OVER_WIN = "fetch/assets/images/125.png"
+BACKGROUND = "fetch/assets/images/000.png"
 BG_RATE = 15
 
 # STATS
@@ -130,10 +130,10 @@ DOG_SAD_RATE = 30
 
 # OWNER
 OWNER_GROUP = "owners"
-OWNER_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(108, 111)]
+OWNER_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(108, 110)]
 OWNER_WIDTH = 20
 OWNER_HEIGHT = 20
-OWNER_RATE = 25
+OWNER_RATE = 10
 
 # BONE
 BONE_GROUP = "bones"
@@ -168,6 +168,22 @@ KEYBOARD_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(50, 54)]
 KEYBOARD_WIDTH = 200
 KEYBOARD_HEIGHT = 200
 KEYBOARD_RATE = 25
+
+# FETCH TITLE
+FETCH_TITLE_GROUP = "fetchtitle"
+FETCH_TITLE_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(70, 73)]
+FETCH_TITLE_WIDTH = 200
+FETCH_TITLE_HEIGHT = 200
+FETCH_TITLE_RATE = 25
+
+# SWING
+SWING_GROUP = "swings"
+SWING_IMAGES = [f"fetch/assets/images/{n:03}.png" for n in range(80, 83)]
+SWING_WIDTH = 125
+SWING_HEIGHT = 200
+SWING_RATE = 8
+SWING_X = 870
+SWING_Y = 295
 
 # DIALOG
 DIALOG_GROUP = "dialogs"

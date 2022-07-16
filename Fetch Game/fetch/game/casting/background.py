@@ -6,7 +6,7 @@ from game.casting.actor import Actor
 class Background(Actor):
     """Background."""
 
-    def __init__(self, body, animation, debug=False):
+    def __init__(self, body, image, debug=False):
         """Constructs a new Background.
 
         Args:
@@ -14,17 +14,17 @@ class Background(Actor):
             debug: If it is being debugged. 
         """
         super().__init__(debug)
-        self._animation = animation
+        self._image = image
         self._body = body
         
 
-    def get_animation(self):
-        """Gets the background's animation.
+    def get_image(self):
+        """Gets the background's image.
 
         Returns:
-            An instance of animation.
+            An instance of image.
         """
-        return self._animation
+        return self._image
 
     def get_body(self):
         """Gets the background's body.

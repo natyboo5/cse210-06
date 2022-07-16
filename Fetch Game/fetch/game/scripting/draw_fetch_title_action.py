@@ -1,21 +1,21 @@
-
 from constants import *
 from game.scripting.action import Action
 
 
-class DrawBackgroundAction(Action):
+class DrawFetchTitleAction(Action):
 
     def __init__(self, video_service):
         self._video_service = video_service
         
     def execute(self, cast, script, callback):
-        background = cast.get_first_actor(BACKGROUND_GROUP)
-        body = background.get_body()
+        fetch_title = cast.get_first_actor(FETCH_TITLE_GROUP)
+        body = fetch_title.get_body()
 
-        if background.is_debug():
+        if fetch_title.is_debug():
             rectangle = body.get_rectangle()
             self._video_service.draw_rectangle(rectangle, PURPLE)
-
-        image = background.get_image()
+            
+        animation = fetch_title.get_animation()
+        image = animation.next_image()
         position = body.get_position()
         self._video_service.draw_image(image, position)
