@@ -163,7 +163,7 @@ class SceneManager:
                          FONT_SMALL, ALIGN_LEFT, Point(CENTER_X - 100, 810), True)
 
         # MENU
-        self._add_dialog(cast, FIRST_MENU_INSTRUCTIONS, FONT, FONT_SMALL,
+        self._add_dialog(cast, "Press M - Menu", FONT, FONT_SMALL,
                          ALIGN_CENTER, Point(120, CENTER_Y + 50), True)
 
         # WARNING
@@ -400,7 +400,7 @@ class SceneManager:
             size = Point(BONE_WIDTH, BONE_HEIGHT)
 
             vel_x = random.randrange(-3, 9)
-            vel_y = int((i+700)*0.01)
+            vel_y = int((i+900)*0.01)
 
             velocity = Point(vel_y, vel_x)
             type_of_bone = random.randrange(0, 4)
