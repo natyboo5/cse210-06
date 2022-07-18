@@ -4,7 +4,7 @@ from game.casting.point import Point
 
 
 class Dog(Actor):
-    """A implement used to hit and bounce the ball in the game."""
+    """A implement used to draw the dog in the game."""
     
     def __init__(self, body, animation, debug = False):
         """Constructs a new dog.
@@ -12,7 +12,6 @@ class Dog(Actor):
         Args:Args:
             body: A new instance of Body.
             animation: A new instance of Animation.
-            debug: If it is being debugged. 
         """
         super().__init__(debug)
         self._body = body

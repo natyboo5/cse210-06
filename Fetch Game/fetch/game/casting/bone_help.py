@@ -8,16 +8,15 @@ from game.casting.animation import Animation
 
 
 class BoneHelp(Actor):
-    """A solid, object that is bounced around in the game."""
+    """A solid, object that is draw in the help menu."""
 
     def __init__(self, body, type_of_bone=0, debug = False):
         """Constructs a new Bone.
 
         Args:
+            animation: A new instance of Animation.
             body: A new instance of Body.
-            order: Bone order.
             type_of_bone: It's the type of the bone.
-            debug: If it is being debugged.
         """
         super().__init__(debug)
         self._animation = 0

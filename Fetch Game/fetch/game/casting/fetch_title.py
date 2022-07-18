@@ -4,15 +4,14 @@ from game.casting.point import Point
 
 
 class FetchTitle(Actor):
-    """A implement used to print the title in the game."""
+    """A implement used to draw the title in the game."""
     
     def __init__(self, body, animation, debug = False):
         """Constructs a title.
         
         Args:Args:
             body: A new instance of Body.
-            animation: A new instance of Animation.
-            debug: If it is being debugged. 
+            animation: A new instance of Animation. 
         """
         super().__init__(debug)
         self._body = body

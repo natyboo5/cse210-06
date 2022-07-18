@@ -55,6 +55,9 @@ class DrawBonesAction(Action):
                         stats.next_level()
                         self._counter = 0
 
+                        if self._bg_counter == 3:
+                           self._bg_counter = 0
+
                         self._bg_counter += 1
                         self._add_background(cast, self._bg_counter)
 

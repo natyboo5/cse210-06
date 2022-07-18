@@ -8,7 +8,7 @@ from game.casting.animation import Animation
 
 
 class Bone(Actor):
-    """A solid, object that is bounced around in the game."""
+    """A solid, object that move around in the game."""
 
     def __init__(self, body, order, type_of_bone=0, debug = False):
         """Constructs a new Bone.
@@ -17,7 +17,7 @@ class Bone(Actor):
             body: A new instance of Body.
             order: Bone order.
             type_of_bone: It's the type of the bone.
-            debug: If it is being debugged.
+            animation: A new instance of Animation.
         """
         super().__init__(debug)
         self._image = 0
